@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Manual de usuario y guía de presentación · Tándem</title>
+<style>
+  @page{size:A4;margin:18mm 16mm 18mm 16mm}
+  *{box-sizing:border-box}
+  body{font:10.5pt/1.55 "Segoe UI",Arial,sans-serif;color:#14302f;margin:0}
+  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:#0c2b2c;line-height:1.15}
+  h1{font-size:30pt;margin:0 0 6pt;font-weight:400}
+  h2{font-size:17pt;margin:26pt 0 8pt;padding-top:8pt;border-top:2px solid #f0a030;font-weight:400;page-break-after:avoid}
+  h3{font-size:12.5pt;margin:16pt 0 4pt;font-weight:700;page-break-after:avoid}
+  p{margin:0 0 7pt}
+  ul,ol{margin:0 0 8pt;padding-left:18pt}
+  li{margin-bottom:3pt}
+  code{font:9.5pt Consolas,monospace;background:#efe8d8;padding:1pt 4pt;border-radius:3pt}
+  table{width:100%;border-collapse:collapse;margin:6pt 0 12pt;font-size:9.6pt}
+  th{background:#0c2b2c;color:#f7f2e8;text-align:left;padding:5pt 7pt;font-weight:600}
+  td{padding:5pt 7pt;border-bottom:1px solid #d9cfba;vertical-align:top}
+  tr{page-break-inside:avoid}
+  .portada{height:240mm;display:flex;flex-direction:column;justify-content:center;page-break-after:always}
+  .portada .marca{display:flex;align-items:center;gap:10pt;margin-bottom:40pt}
+  .portada .sub{font-size:14pt;color:#4d6663;max-width:125mm}
+  .portada .meta{margin-top:50pt;color:#4d6663}
+  .caja{background:#f7f2e8;border-left:4px solid #f0a030;padding:8pt 12pt;margin:8pt 0 12pt;border-radius:3pt;page-break-inside:avoid}
+  .caja b:first-child{color:#8a5200}
+  .decir{background:#e3efe6;border-left:4px solid #12403f;padding:8pt 12pt;margin:6pt 0 12pt;border-radius:3pt;page-break-inside:avoid;font-style:italic}
+  .decir:before{content:"Qué decir · ";font-style:normal;font-weight:700;color:#12403f}
+  .paso{display:grid;grid-template-columns:60pt 1fr;gap:0;margin:6pt 0;page-break-inside:avoid;border:1px solid #d9cfba;border-radius:5pt;overflow:hidden}
+  .paso>div:first-child{background:#12403f;color:#f0a030;font-weight:700;padding:8pt;text-align:center;font-size:9.5pt}
+  .paso>div:last-child{padding:7pt 10pt}
+  .paso p{margin:0 0 4pt}
+  .indice li{margin-bottom:2pt}
+  em{color:#8a5200;font-style:normal;font-weight:600}
+  .check li{list-style:none;margin-left:-14pt}
+  .check li:before{content:"☐  "}
+</style>
+</head>
+<body>
+
+<section class="portada">
+  <div class="marca">
+    <svg width="64" height="43" viewBox="0 0 48 32"><circle cx="17" cy="16" r="13" fill="#0c2b2c"/><circle cx="31" cy="16" r="13" fill="#f0a030" fill-opacity=".9"/></svg>
+    <span style="font:26pt Georgia,serif;color:#0c2b2c">Tándem</span>
+  </div>
+  <h1>Manual de usuario y guía de presentación</h1>
+  <p class="sub">Cómo recorrer la aplicación, qué hacer en cada pantalla y qué ir diciendo mientras se muestra.</p>
+  <p class="meta">Sistema de Monitorías Académicas<br>Proyecto final · Herramientas Computacionales · 2026-2<br>Sustentación: miércoles 18 de noviembre, 6:30 a. m.<br>Este manual sirve para estudiar la página. Para estudiar el código, usa la Guía de funcionamiento.</p>
+</section>
+
+<h2 style="margin-top:0;border-top:0">Contenido</h2>
+<ol class="indice">
+  <li>Antes de empezar: preparar la demostración</li>
+  <li>Cómo se divide la presentación (10 minutos)</li>
+  <li>Recorrido de la portada</li>
+  <li>Manual del estudiante</li>
+  <li>Manual del monitor</li>
+  <li>Manual del docente</li>
+  <li>Manual de Bienestar Institucional</li>
+  <li>Guion completo de la demostración en vivo (7 minutos)</li>
+  <li>Si algo falla durante la demo</li>
+  <li>Preguntas sobre la página y cómo responderlas</li>
+  <li>Hoja de repaso rápido</li>
+</ol>
+
+<h2>1. Antes de empezar: preparar la demostración</h2>
+<div class="caja"><b>Usa la versión local, no la de Vercel.</b> En Vercel la base de datos se reinicia sola y los cambios desaparecen. En la sustentación hay que probar persistencia (registrar, modificar y eliminar), y eso solo se demuestra con la versión local, que guarda en el archivo <code>monitorias.db</code>.</div>
+<h3>Lista de verificación (hazla la noche anterior y 10 minutos antes)</h3>
+<ul class="check">
+  <li>Abrir una terminal en la carpeta del proyecto y activar el entorno: <code>venv\Scripts\activate</code></li>
+  <li>Dejar los datos en cero con los ejemplos: <code>python init_db.py</code> (borra lo anterior y recrea todo).</li>
+  <li>Arrancar el servidor: <code>python app.py</code> y abrir <code>http://127.0.0.1:5000</code></li>
+  <li>Tener abierta una segunda ventana en modo incógnito (para entrar con otro perfil sin cerrar sesión).</li>
+  <li>Tener a mano VS Code con el proyecto abierto en <code>models/solicitud.py</code> y <code>schema.sql</code>.</li>
+  <li>Cargar la página con internet (las fotos y las animaciones se descargan de la red). Si no hay internet, el sistema funciona igual pero la portada se ve con menos imágenes.</li>
+  <li>Cerrar notificaciones, poner el zoom del navegador en 100 % y la pantalla en modo presentación.</li>
+  <li>Probar el recorrido completo una vez, y volver a ejecutar <code>python init_db.py</code> para dejarlo limpio.</li>
+</ul>
+<h3>Usuarios de ejemplo (la clave de todos es <code>Tandem2026!</code>)</h3>
+<table>
+  <tr><th>Perfil</th><th>Correo</th><th>Qué tiene</th></tr>
+  <tr><td>Estudiante</td><td>laura@tandem.edu</td><td>Inscrita en Cálculo I y Programación. Tiene una solicitud pendiente (Derivadas parciales) y una asignada (Ciclos y listas en Python).</td></tr>
+  <tr><td>Estudiante</td><td>sebastian@tandem.edu · mariana@tandem.edu</td><td>Sebastián cursa Física I y Álgebra Lineal. Mariana cursa Bases de Datos y Estadística.</td></tr>
+  <tr><td>Monitor</td><td>camila@tandem.edu</td><td>Atiende Cálculo I y Álgebra Lineal. Tiene franjas el lunes y el miércoles.</td></tr>
+  <tr><td>Monitor</td><td>andres@tandem.edu</td><td>Atiende Programación y Bases de Datos. Ya tiene asignada la solicitud de Laura "Ciclos y listas en Python".</td></tr>
+  <tr><td>Monitor</td><td>valentina@tandem.edu · daniela@tandem.edu</td><td>Valentina atiende Física I; Daniela, Estadística y Cálculo I.</td></tr>
+  <tr><td>Docente</td><td>docente.calculo@tandem.edu</td><td>Carlos Mejía: Cálculo I, Álgebra Lineal, Física I y Estadística.</td></tr>
+  <tr><td>Docente</td><td>docente.prog@tandem.edu</td><td>Luisa Fernanda Torres: Programación y Bases de Datos.</td></tr>
+  <tr><td>Bienestar</td><td>bienestar@tandem.edu</td><td>Patricia Ramírez. Ve las solicitudes pendientes y administra todo.</td></tr>
+</table>
+
+<h2>2. Cómo se divide la presentación (10 minutos)</h2>
+<p>Los lineamientos fijan dos partes y un tiempo estricto. Todos los integrantes deben hablar.</p>
+<table>
+  <tr><th>Parte</th><th>Tiempo</th><th>Contenido</th></tr>
+  <tr><td>1 · Diapositivas</td><td>Máx. 3 min</td><td>El problema, los objetivos y el diagrama de arquitectura (backend, frontend y base de datos). Las diapositivas se hacen luego.</td></tr>
+  <tr><td>2 · Demostración en vivo</td><td>Máx. 7 min</td><td>Navegación real, prueba de persistencia (registro, modificación y eliminación en tiempo real) y experiencia de usuario.</td></tr>
+</table>
+<h3>Reparto sugerido de la demostración entre integrantes</h3>
+<table>
+  <tr><th>Quién</th><th>Qué muestra</th><th>Tiempo</th></tr>
+  <tr><td>Integrante 1</td><td>Portada, registro y creación de solicitud (estudiante)</td><td>2:30</td></tr>
+  <tr><td>Integrante 2</td><td>Bienestar: asignar y reportes</td><td>2:00</td></tr>
+  <tr><td>Integrante 3</td><td>Monitor: franja y sesión; eliminación; vistazo al código</td><td>2:30</td></tr>
+</table>
+<div class="caja"><b>Consejo:</b> ensayen cronometrando. Es mejor llegar a 6:30 que cortarse a los 7:00. Quien no está hablando maneja el siguiente paso (cambiar de ventana o preparar el inicio de sesión).</div>
+
+<h2>3. Recorrido de la portada</h2>
+<p>La portada es la cara pública. No necesita iniciar sesión. Es lo primero que ve el jurado, así que conviene recorrerla despacio, bajando con el scroll del mouse.</p>
+
+<div class="paso"><div>Carga</div><div><p><b>Qué verás:</b> una pantalla verde oscuro con el logo (dos círculos que se juntan), el nombre Tándem y una barra que se llena. Dura poco más de un segundo y sube como cortina.</p><p><b>Para qué:</b> da identidad y deja que carguen las imágenes.</p></div></div>
+<div class="paso"><div>Inicio</div><div><p><b>Qué verás:</b> foto de estudiantes, el título "Aprende de quien ya lo superó." y dos botones: <em>Solicitar una monitoría</em> y <em>Ver monitores</em>. Arriba, el menú y el botón <em>Ingresar</em>.</p><p><b>Al bajar:</b> la foto se desplaza más lento que el texto (efecto de profundidad).</p></div></div>
+<div class="decir">Esta es Tándem, el sistema de monitorías. La idea es que un estudiante aprenda de quien ya superó esa materia. Todo lo que van a ver funciona con datos reales guardados en una base de datos.</div>
+
+<div class="paso"><div>Declaración</div><div><p><b>Qué verás:</b> un párrafo grande que se va "encendiendo" palabra por palabra mientras bajas.</p><p><b>Qué explica:</b> el problema, que una monitoría no debería depender de a quién conoces.</p></div></div>
+<div class="paso"><div>Cifras</div><div><p><b>Qué verás:</b> cuatro cifras que cuentan hasta su valor: 4 perfiles, 10 historias de usuario, 3 pasos y 100 % de asistencias con registro.</p></div></div>
+<div class="paso"><div>Perfiles</div><div><p><b>Qué verás:</b> la sección se "ancla" y al seguir bajando las tarjetas se desplazan en horizontal: Estudiante, Monitor, Docente y Bienestar Institucional, cada una con su foto y lo que hace.</p><p><b>Nota:</b> en celular las tarjetas se apilan hacia abajo.</p></div></div>
+<div class="decir">Son cuatro perfiles y cada uno ve solo lo que necesita. El estudiante pide, el monitor atiende, el docente acompaña y Bienestar coordina.</div>
+
+<div class="paso"><div>Foto grande</div><div><p><b>Qué verás:</b> una foto del campus que crece hasta ocupar toda la pantalla y muestra el texto "El mejor repaso es una conversación".</p></div></div>
+<div class="paso"><div>Cómo funciona</div><div><p><b>Qué verás:</b> tres tarjetas que se apilan al bajar: <em>Pides la monitoría</em>, <em>Bienestar asigna</em> y <em>Asistes y queda registro</em>.</p><p><b>Qué explica:</b> el flujo completo, que es el mismo que van a demostrar.</p></div></div>
+<div class="decir">Este es el proceso en tres pasos. El estudiante solicita, Bienestar asigna al monitor y, después de la sesión, el monitor registra asistencia y temas. Cada paso queda guardado.</div>
+
+<div class="paso"><div>Monitores</div><div><p><b>Qué verás:</b> tarjetas con cada monitor, sus materias y sus franjas. Hay un buscador por nombre y botones de materia.</p><p><b>Qué hacer:</b> pulsa una materia (por ejemplo, <em>Cálculo I</em>) y escribe "ca" en el buscador. La lista cambia sin recargar la página.</p></div></div>
+<div class="decir">Estos monitores no están escritos en la página: vienen de la base de datos. Al elegir una materia, JavaScript le pide los datos al servidor con fetch y redibuja la lista sin recargar.</div>
+
+<div class="paso"><div>Solicitar</div><div><p><b>Qué verás:</b> los tres pasos explicados y un botón que depende de quién mira. Sin sesión: <em>Crear mi cuenta</em> y <em>Ya tengo cuenta</em>. Con sesión de estudiante: <em>Nueva solicitud</em>.</p></div></div>
+<div class="paso"><div>Testimonio y alcance</div><div><p><b>Qué verás:</b> una frase de un estudiante y la sección <em>Lo que cubre la plataforma</em>, con las 10 historias de usuario. Al tocar un perfil (Estudiante, Monitor, Docente, Bienestar) se muestran sus historias y su prioridad.</p></div></div>
+<div class="paso"><div>Cierre</div><div><p><b>Qué verás:</b> el llamado final a crear cuenta y un pie de página con el nombre gigante.</p></div></div>
+<div class="caja"><b>Detalle para destacar:</b> el menú de arriba tiene el botón <em>Ingresar</em>. Si ya iniciaste sesión, cambia a <em>Mi panel</em> y lleva directo a la pantalla de tu perfil.</div>
+
+<h2>4. Manual del estudiante</h2>
+<p>Pantallas: registro, ingreso, <em>Mis solicitudes</em>, <em>Monitores</em> y <em>Nueva solicitud</em>. La barra superior muestra estas tres últimas y el botón <em>Salir</em> con el nombre y el rol de quien está dentro.</p>
+
+<h3>4.1 Crear una cuenta</h3>
+<div class="paso"><div>Ir a</div><div><p>Portada → <em>Crear mi cuenta</em>, o <code>/registro</code>.</p></div></div>
+<div class="paso"><div>Llenar</div><div><p>Nombre completo, código estudiantil (6 a 10 dígitos), correo, programa, contraseña (mínimo 8 caracteres) y marcar las materias que cursa.</p></div></div>
+<div class="paso"><div>Probar el error</div><div><p>Escribe un código corto como <code>123</code> y pasa al siguiente campo: aparece el mensaje en rojo "El código tiene entre 6 y 10 dígitos". Pulsa <em>Crear mi cuenta</em> con campos vacíos: el cursor salta al primer error y sale el aviso "Revisa los campos marcados".</p></div></div>
+<div class="paso"><div>Resultado</div><div><p>Entra directo a <em>Mis solicitudes</em> con el aviso "¡Bienvenido a Tándem!". El correo y el código no se pueden repetir: si ya existen, el servidor lo avisa.</p></div></div>
+<div class="decir">El formulario valida en el navegador para avisar al instante, y el servidor vuelve a validar todo, porque la validación del navegador se puede saltar. La contraseña se guarda cifrada.</div>
+
+<h3>4.2 Iniciar sesión</h3>
+<p>Ir a <em>Ingresar</em>. Correo y contraseña. Si son incorrectos, aparece "Correo o contraseña incorrectos." Al entrar, cada rol llega a su propia pantalla.</p>
+
+<h3>4.3 Ver monitores</h3>
+<div class="paso"><div>Ir a</div><div><p>Menú → <em>Monitores</em>.</p></div></div>
+<div class="paso"><div>Hacer</div><div><p>Elegir una materia en la lista y pulsar <em>Filtrar</em>; o buscar por nombre.</p></div></div>
+<div class="paso"><div>Resultado</div><div><p>Tarjetas con el monitor, sus materias y sus días y horas.</p></div></div>
+
+<h3>4.4 Crear una solicitud</h3>
+<div class="paso"><div>Ir a</div><div><p>Menú → <em>Nueva solicitud</em>, o el botón ámbar en <em>Mis solicitudes</em>.</p></div></div>
+<div class="paso"><div>Llenar</div><div><p>Materia (obligatoria), fecha preferida (no puede ser anterior a hoy), tema (mínimo 4 letras) y notas opcionales para el monitor. Ejemplo: <em>Cálculo I · Integrales por partes</em>.</p></div></div>
+<div class="paso"><div>Resultado</div><div><p>Vuelve a <em>Mis solicitudes</em> con el aviso "Solicitud enviada. Quedó en estado pendiente." La nueva fila aparece con la etiqueta <em>Pendiente</em> y "Por asignar" en la columna Monitor.</p></div></div>
+<div class="decir">Quedó guardada en la tabla solicitudes con estado pendiente. El estudiante solo ve sus propias solicitudes.</div>
+
+<h3>4.5 Seguir, editar, cancelar y eliminar</h3>
+<table>
+  <tr><th>Estado</th><th>Etiqueta</th><th>Qué se puede hacer</th></tr>
+  <tr><td>Pendiente</td><td>Ámbar</td><td><em>Editar</em>, <em>Cancelar</em> y <em>Eliminar</em>.</td></tr>
+  <tr><td>Asignada</td><td>Verde</td><td>Solo <em>Cancelar</em>. Ya muestra el nombre del monitor.</td></tr>
+  <tr><td>Atendida</td><td>Verde oscuro</td><td>Nada. Muestra si asistió y los temas vistos.</td></tr>
+  <tr><td>Cancelada</td><td>Gris</td><td>Solo <em>Eliminar</em>.</td></tr>
+</table>
+<p>Cancelar y eliminar piden confirmación ("¿Cancelar esta solicitud?"). Eliminar borra la fila para siempre.</p>
+<div class="decir">Por seguridad y coherencia, una solicitud solo se edita mientras está pendiente: después ya hay un monitor organizando su tiempo.</div>
+
+<h2>5. Manual del monitor</h2>
+<p>Ingresar con <code>camila@tandem.edu</code> o <code>andres@tandem.edu</code>. Un monitor <b>no se registra solo</b>: lo crea Bienestar. Su pantalla es <em>Mi agenda</em>.</p>
+<h3>5.1 Mi agenda</h3>
+<p>Arriba aparecen las materias que atiende (las define Bienestar). Después, dos tablas: <em>Mis días y horas disponibles</em> y <em>Solicitudes asignadas a mí</em>.</p>
+<h3>5.2 Publicar disponibilidad</h3>
+<div class="paso"><div>Ir a</div><div><p><em>Agregar franja</em> (botón ámbar).</p></div></div>
+<div class="paso"><div>Llenar</div><div><p>Día (lunes a sábado), hora de inicio y hora de fin.</p></div></div>
+<div class="paso"><div>Probar el error</div><div><p>Pon la hora de fin antes que la de inicio: "La hora de fin debe ser después de la de inicio".</p></div></div>
+<div class="paso"><div>Resultado</div><div><p>La franja aparece en la tabla y ya la ven los estudiantes en la portada y en <em>Monitores</em>. Se puede <em>Editar</em> o <em>Eliminar</em> (con confirmación).</p></div></div>
+<h3>5.3 Registrar una sesión</h3>
+<div class="paso"><div>Ir a</div><div><p>En <em>Solicitudes asignadas a mí</em> → <em>Registrar sesión</em>.</p></div></div>
+<div class="paso"><div>Llenar</div><div><p>Marcar <em>Sí asistió</em> o <em>No asistió</em> y escribir los temas vistos (por ejemplo, "Regla de la cadena y ejercicios 3 a 8").</p></div></div>
+<div class="paso"><div>Regla</div><div><p>Si marcó que asistió, los temas son obligatorios.</p></div></div>
+<div class="paso"><div>Resultado</div><div><p>La solicitud pasa a <em>Atendida</em>, queda guardado en la tabla sesiones y el enlace cambia a <em>Corregir sesión</em>.</p></div></div>
+<div class="decir">Aquí se resuelve el problema original: antes nadie sabía si la monitoría ocurrió ni qué se vio. Ahora queda registro, y el estudiante, el docente y Bienestar pueden consultarlo.</div>
+
+<h2>6. Manual del docente</h2>
+<p>Ingresar con <code>docente.calculo@tandem.edu</code>. Es una cuenta creada por Bienestar. El menú tiene <em>Mis estudiantes</em> e <em>Historial</em>.</p>
+<h3>6.1 Remitir a un estudiante</h3>
+<div class="paso"><div>Qué ve</div><div><p>Una fila por cada estudiante inscrito en sus materias, con su nombre, código y materia. Solo ve a los suyos.</p></div></div>
+<div class="paso"><div>Hacer</div><div><p>Escribir el tema que debe reforzar (por ejemplo, "Límites") y pulsar <em>Remitir</em>. El tema vacío o muy corto muestra un error.</p></div></div>
+<div class="paso"><div>Resultado</div><div><p>Aviso "Estudiante remitido a monitoría". Se crea una solicitud a nombre del estudiante, marcada "Remitida por tu docente". Le aparece al estudiante y a Bienestar como pendiente.</p></div></div>
+<div class="decir">El docente no puede remitir a un estudiante de otra materia: el servidor lo comprueba, aunque alguien intentara manipular el formulario.</div>
+<h3>6.2 Historial</h3>
+<p>Tabla con todas las monitorías de sus estudiantes: materia, tema, fecha, monitor y estado. Si ya fue atendida, muestra si asistió y qué temas se vieron. Se filtra por materia y se busca por estudiante o tema.</p>
+
+<h2>7. Manual de Bienestar Institucional</h2>
+<p>Ingresar con <code>bienestar@tandem.edu</code>. Es el perfil con más herramientas. El menú tiene <em>Asignación</em>, <em>Reportes</em>, <em>Usuarios</em> y <em>Materias</em>.</p>
+<h3>7.1 Asignar monitores</h3>
+<div class="paso"><div>Qué ve</div><div><p><em>Solicitudes pendientes</em>: materia, tema, estudiante, fecha y, si aplica, "remitida por docente". Debajo, un <em>Resumen por materia</em> con totales, atendidas y pendientes.</p></div></div>
+<div class="paso"><div>Hacer</div><div><p>En la fila, abrir la lista de monitores y elegir uno; pulsar <em>Asignar</em>.</p></div></div>
+<div class="paso"><div>Regla</div><div><p>Solo aparecen monitores que atienden esa materia. Si ninguno la atiende (por ejemplo, Física I sin monitor), la lista dice "Ningún monitor atiende esta materia" y el botón queda desactivado.</p></div></div>
+<div class="paso"><div>Resultado</div><div><p>Aviso "Monitor asignado". La solicitud sale de la lista de pendientes. El estudiante la ve como <em>Asignada</em> y el monitor la ve en su agenda.</p></div></div>
+<div class="decir">La asignación no es libre: el sistema impide asignar a alguien que no domina la materia. Eso es una regla del negocio, no solo del diseño.</div>
+
+<h3>7.2 Reportes</h3>
+<div class="paso"><div>Ir a</div><div><p>Menú → <em>Reportes</em>.</p></div></div>
+<div class="paso"><div>Hacer</div><div><p>Elegir materia, monitor o estado, y escribir en el buscador un estudiante o tema.</p></div></div>
+<div class="paso"><div>Resultado</div><div><p>La tabla se actualiza sola mientras escribes, sin recargar, y el contador indica "N resultado(s)". La dirección de la página conserva el filtro.</p></div></div>
+<div class="decir">Cada vez que escribo, JavaScript consulta una ruta del servidor que devuelve JSON y reconstruye la tabla. Si JavaScript fallara, el botón Filtrar funciona igual como un formulario normal.</div>
+
+<h3>7.3 Usuarios (CRUD)</h3>
+<table>
+  <tr><th>Acción</th><th>Cómo</th><th>Detalle</th></tr>
+  <tr><td>Listar y buscar</td><td>Menú → Usuarios</td><td>Filtro por rol y búsqueda por nombre, correo o código.</td></tr>
+  <tr><td>Crear</td><td>Nuevo usuario</td><td>Nombre, correo, rol, código (obligatorio para estudiantes y monitores), programa, contraseña y materias.</td></tr>
+  <tr><td>Editar</td><td>Editar en la fila</td><td>La contraseña se deja vacía si no se quiere cambiar.</td></tr>
+  <tr><td>Eliminar</td><td>Eliminar en la fila</td><td>Pide confirmación y avisa que también se borran sus solicitudes. No se puede eliminar la propia cuenta.</td></tr>
+</table>
+<p>Las <em>materias</em> del formulario significan dos cosas según el rol: las que <b>cursa</b> un estudiante, o las que <b>atiende</b> un monitor. Así se arma qué monitores aparecen al asignar.</p>
+<h3>7.4 Materias (CRUD)</h3>
+<p>Menú → <em>Materias</em>: crear, editar (nombre y docente) y eliminar. Si la materia ya tiene solicitudes, el sistema no la elimina y avisa "No se puede eliminar: ya tiene solicitudes registradas".</p>
+
+<h2>8. Guion completo de la demostración en vivo (7 minutos)</h2>
+<p>Este guion recorre el flujo completo usando los datos de ejemplo. Requiere dos ventanas del navegador (una normal y una de incógnito) o cerrar sesión entre perfiles.</p>
+
+<div class="paso"><div>0:00<br>Portada</div><div><p><b>Hacer:</b> mostrar la portada, bajar hasta <em>Monitores</em>, pulsar <em>Cálculo I</em>.</p><p><b>Decir:</b> "Esta es la cara pública de Tándem. Los monitores vienen de la base de datos y el filtro usa fetch, sin recargar."</p></div></div>
+<div class="paso"><div>1:00<br>Registro</div><div><p><b>Hacer:</b> <em>Ingresar</em> → <em>Regístrate</em>. Escribir un código corto para mostrar el error. Corregirlo y crear la cuenta de, por ejemplo, <em>Pedro Pérez</em> (código 20249999, programa Ingeniería de Sistemas), marcando Cálculo I.</p><p><b>Decir:</b> "Valida en el navegador y el servidor lo vuelve a validar. La contraseña queda cifrada."</p></div></div>
+<div class="paso"><div>2:00<br>Crear</div><div><p><b>Hacer:</b> <em>Nueva solicitud</em>: Cálculo I, fecha de mañana, tema "Integrales por partes". Enviar.</p><p><b>Decir:</b> "Se guardó en la base con estado pendiente." Señalar la etiqueta y "Por asignar".</p></div></div>
+<div class="paso"><div>2:40<br>Modificar</div><div><p><b>Hacer:</b> <em>Editar</em>, cambiar el tema a "Integrales por sustitución" y guardar.</p><p><b>Decir:</b> "Esto es el Update del CRUD. Solo se puede editar mientras está pendiente."</p></div></div>
+<div class="paso"><div>3:10<br>Asignar</div><div><p><b>Hacer:</b> en la ventana de incógnito entrar como <code>bienestar@tandem.edu</code>. En <em>Asignación</em> aparece la solicitud de Pedro. Elegir <em>Camila Rojas</em> y pulsar <em>Asignar</em>.</p><p><b>Decir:</b> "Solo me deja elegir monitores de esa materia."</p></div></div>
+<div class="paso"><div>4:00<br>Sesión</div><div><p><b>Hacer:</b> cerrar sesión y entrar como <code>camila@tandem.edu</code>. Mostrar <em>Mi agenda</em>, agregar una franja del sábado y en la solicitud de Pedro pulsar <em>Registrar sesión</em>: Sí asistió, temas "Sustitución y 5 ejercicios". Guardar.</p><p><b>Decir:</b> "La monitoría queda como Atendida, con asistencia y temas."</p></div></div>
+<div class="paso"><div>5:00<br>Reportes</div><div><p><b>Hacer:</b> volver a Bienestar → <em>Reportes</em>. Escribir "Pedro" en el buscador y luego filtrar por estado <em>Atendida</em>.</p><p><b>Decir:</b> "La tabla se actualiza sola. Aquí Bienestar ve materia, monitor y asistencia."</p></div></div>
+<div class="paso"><div>5:50<br>Eliminar</div><div><p><b>Hacer:</b> entrar como <code>laura@tandem.edu</code>. En <em>Mis solicitudes</em>, en "Derivadas parciales" pulsar <em>Eliminar</em> y aceptar la confirmación. Desaparece.</p><p><b>Decir:</b> "Con esto completamos la prueba de persistencia: se registró, se modificó y se eliminó, y los datos están en la base."</p></div></div>
+<div class="paso"><div>6:20<br>Código</div><div><p><b>Hacer:</b> cambiar a VS Code y mostrar <code>models/solicitud.py</code> (la función <code>crear</code>) y <code>schema.sql</code>.</p><p><b>Decir:</b> "Aquí se ve la conexión de las tres capas: el formulario del frontend, la ruta de Flask y el INSERT en la base de datos relacional."</p></div></div>
+<div class="caja"><b>Para demostrar que de verdad persiste:</b> si hay tiempo, detén el servidor (<code>Ctrl + C</code>), vuelve a arrancarlo con <code>python app.py</code> y recarga la página: los datos siguen ahí.</div>
+
+<h2>9. Si algo falla durante la demo</h2>
+<table>
+  <tr><th>Qué pasa</th><th>Qué hacer</th></tr>
+  <tr><td>La página no abre</td><td>Revisa que el servidor siga corriendo en la terminal. Si se cerró, ejecuta <code>python app.py</code> de nuevo. Dirección: <code>http://127.0.0.1:5000</code> (no uses <code>https</code>).</td></tr>
+  <tr><td>La portada se queda en la pantalla verde de carga</td><td>Espera unos 3 segundos: tiene una red de seguridad que la quita sola. Si no hay internet, recarga con conexión.</td></tr>
+  <tr><td>"Correo o contraseña incorrectos"</td><td>Revisa el correo (todos terminan en <code>@tandem.edu</code>) y la clave <code>Tandem2026!</code> con mayúscula y signo de cierre. Si borraste a ese usuario, ejecuta <code>python init_db.py</code> fuera de la demo.</td></tr>
+  <tr><td>Aparece error 400</td><td>El token de seguridad caducó (la página estuvo abierta mucho tiempo o se cerró sesión en otra ventana). Recarga la página y repite la acción.</td></tr>
+  <tr><td>Aparece error 403</td><td>Estás en un perfil que no tiene permiso para esa pantalla. Es el comportamiento correcto; puedes mostrarlo como prueba de la seguridad por roles.</td></tr>
+  <tr><td>No aparece ningún monitor al asignar</td><td>Esa materia no tiene monitor asignado. Es la regla del sistema. Elige una solicitud de Cálculo I, Programación, Bases de Datos o Estadística, o agrega la materia al monitor desde <em>Usuarios</em>.</td></tr>
+  <tr><td>La demo quedó sucia (muchos datos)</td><td>Deténla, ejecuta <code>python init_db.py</code> y arranca otra vez. Todo vuelve a los ejemplos.</td></tr>
+</table>
+<div class="caja"><b>Regla de oro:</b> si algo falla, no te quedes callado ni te disculpes largo. Di en una frase qué debería pasar y qué regla del sistema lo explica, y sigue con el siguiente paso.</div>
+
+<h2>10. Preguntas sobre la página y cómo responderlas</h2>
+<h3>¿Por qué cada perfil ve cosas distintas?</h3>
+<p>Porque cada usuario tiene un rol y el servidor revisa ese rol en cada ruta. Si un estudiante intenta entrar a <code>/bienestar/</code>, recibe un error 403, aunque escriba la dirección a mano.</p>
+<h3>¿Por qué el monitor no se registra solo?</h3>
+<p>Porque ser monitor es una designación institucional. Lo crea Bienestar y le define las materias que atiende, que es lo que usa luego para asignarle solicitudes.</p>
+<h3>¿Qué pasa si dos personas piden lo mismo?</h3>
+<p>Cada solicitud es independiente y tiene su identificador. Bienestar puede asignar monitores distintos o el mismo en horarios diferentes.</p>
+<h3>¿Cómo sabe el sistema qué monitores pueden atender una materia?</h3>
+<p>Por la tabla <code>monitor_materias</code>, que relaciona monitores con materias. Al asignar, el servidor consulta esa relación y rechaza a quien no esté en ella.</p>
+<h3>¿Por qué usaron animaciones en la portada?</h3>
+<p>Para dar una primera impresión profesional y contar el proceso mientras se baja. Los lineamientos lo valoran como valor agregado. Las pantallas internas son sobrias a propósito, porque ahí lo importante es hacer tareas rápido.</p>
+<h3>¿Funciona en celular?</h3>
+<p>Sí. En pantallas pequeñas el menú se pliega, los perfiles se apilan y las tablas se convierten en tarjetas con cada dato etiquetado.</p>
+<h3>¿Qué hace el aviso que aparece abajo?</h3>
+<p>Son los mensajes que el servidor deja después de cada acción (guardado, error, eliminado). Un archivo de JavaScript los convierte en un aviso emergente que desaparece solo.</p>
+<h3>¿La página está en internet?</h3>
+<p>Hay una versión de demostración en <code>sistema-monitorias.vercel.app</code>. En ese servicio la base de datos se reinicia, por eso la prueba de persistencia se hace con la versión local.</p>
+
+<h2>11. Hoja de repaso rápido</h2>
+<table>
+  <tr><th>Idea</th><th>En una frase</th></tr>
+  <tr><td>Qué es</td><td>Una plataforma para pedir, asignar y registrar monitorías académicas.</td></tr>
+  <tr><td>Perfiles</td><td>Estudiante pide, monitor atiende, docente remite y consulta, Bienestar asigna y reporta.</td></tr>
+  <tr><td>Flujo</td><td>Pendiente → Asignada → Atendida (o Cancelada).</td></tr>
+  <tr><td>Quién crea qué</td><td>El estudiante se registra solo; monitores, docentes y Bienestar los crea Bienestar.</td></tr>
+  <tr><td>CRUD</td><td>Solicitudes (estudiante), franjas (monitor), usuarios y materias (Bienestar).</td></tr>
+  <tr><td>Búsqueda dinámica</td><td>Monitores en la portada y reportes de Bienestar, con fetch.</td></tr>
+  <tr><td>Validación</td><td>En el navegador y, otra vez, en el servidor.</td></tr>
+  <tr><td>Seguridad</td><td>Contraseña cifrada, permisos por rol, token CSRF y consultas con parámetros.</td></tr>
+  <tr><td>Base de datos</td><td>SQLite con 7 tablas, llaves primarias y foráneas, y restricciones.</td></tr>
+  <tr><td>Arquitectura</td><td>Flask con MVC: modelos, controladores y plantillas.</td></tr>
+  <tr><td>Clave de los usuarios de ejemplo</td><td><code>Tandem2026!</code></td></tr>
+  <tr><td>Reiniciar los datos</td><td><code>python init_db.py</code></td></tr>
+  <tr><td>Arrancar</td><td><code>python app.py</code> → <code>http://127.0.0.1:5000</code></td></tr>
+</table>
+<div class="caja"><b>Cómo estudiar:</b> haz el recorrido completo tres veces. La primera leyendo este manual, la segunda sin leerlo y solo hablando, y la tercera cronometrada en 7 minutos y repartida entre los integrantes. Después repasa la Guía de funcionamiento para poder explicar el código detrás de cada pantalla.</div>
+
+</body>
+</html>
