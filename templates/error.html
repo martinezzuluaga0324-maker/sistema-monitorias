@@ -1,0 +1,9 @@
+{% extends "app_base.html" %}
+{% block titulo %}Error {{ codigo }}{% endblock %}
+{% block contenido %}
+<section class="vacio-pagina">
+  <p class="codigo">{{ codigo }}</p>
+  <h1>{{ mensaje }}</h1>
+  <a class="btn btn--pill btn--ink" href="{{ url_for('publico.inicio') }}">Volver al inicio</a>
+</section>
+{% endblock %}

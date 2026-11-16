@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{# Estructura de las pantallas internas (después de iniciar sesión): barra superior + contenido. #}
+
+{% block body_class %}app{% endblock %}
+
+{% block cuerpo %}
+<header class="appbar">
+  <a class="brand" href="{{ url_for('publico.inicio') }}" aria-label="Tándem, portada">
+    <svg viewBox="0 0 48 32"><use href="#logo-mark"/></svg><span>Tándem</span>
+  </a>
+
+  {% if usuario %}
+  <nav class="appbar__links" aria-label="Principal">
+    {% if usuario.rol == 'estudiante' %}
+      <a href="{{ url_for('estudiante.panel') }}">Mis solicitudes</a>
+      <a href="{{ url_for('estudiante.monitores') }}">Monitores</a>
+      <a href="{{ url_for('estudiante.nueva') }}">Nueva solicitud</a>
+    {% elif usuario.rol == 'monitor' %}
+      <a href="{{ url_for('monitor.panel') }}">Mi agenda</a>
+    {% elif usuario.rol == 'docente' %}
+      <a href="{{ url_for('docente.panel') }}">Mis estudiantes</a>
+      <a href="{{ url_for('docente.historial') }}">Historial</a>
+    {% elif usuario.rol == 'bienestar' %}
+      <a href="{{ url_for('bienestar.panel') }}">Asignación</a>
+      <a href="{{ url_for('bienestar.reportes') }}">Reportes</a>
+      <a href="{{ url_for('bienestar.usuarios_lista') }}">Usuarios</a>
+      <a href="{{ url_for('bienestar.materias_lista') }}">Materias</a>
+    {% endif %}
+  </nav>
+  <div class="appbar__user">
+    <span>{{ usuario.nombre }}<small>{{ usuario.rol | capitalize }}</small></span>
+    <form method="post" action="{{ url_for('auth.logout') }}">
+      <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+      <button class="btn btn--pill btn--ghost btn--sm">Salir</button>
+    </form>
+  </div>
+  {% endif %}
+</header>
+
+<main class="page" id="contenido">
+  {% block contenido %}{% endblock %}
+</main>
+{% endblock %}

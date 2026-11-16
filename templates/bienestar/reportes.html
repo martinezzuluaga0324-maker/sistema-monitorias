@@ -1,0 +1,31 @@
+{% extends "app_base.html" %}
+{% from "_macros.html" import lista, estado %}
+{% block titulo %}Reportes{% endblock %}
+
+{% block contenido %}
+<div class="page__head"><h1>Reportes de <em>monitorías</em></h1></div>
+
+{# Los filtros funcionan sin JavaScript (GET); con JavaScript la tabla se actualiza con fetch() mientras escribes. #}
+<form method="get" class="filtros" id="filtros">
+  {{ lista('materia', 'Materia', materias, {'materia': f.materia_id}, {}, 'Todas', false) }}
+  {{ lista('monitor', 'Monitor', monitores, {'monitor': f.monitor_id}, {}, 'Todos', false) }}
+  <div class="field"><label for="estado">Estado</label>
+    <select id="estado" name="estado"><option value="">Todos</option>
+      {% for e in ('pendiente', 'asignada', 'atendida', 'cancelada') %}<option value="{{ e }}" {{ 'selected' if f.estado == e }}>{{ e | capitalize }}</option>{% endfor %}
+    </select></div>
+  <div class="field"><label for="q">Buscar estudiante o tema</label><input id="q" name="q" value="{{ f.texto }}" autocomplete="off"></div>
+  <button class="btn btn--pill btn--ink">Filtrar</button>
+</form>
+
+<p class="conteo" id="conteo" aria-live="polite">{{ filas | length }} resultado(s)</p>
+<div class="tabla-wrap"><table class="tabla" id="tablaReporte" data-api="{{ url_for('bienestar.api_reportes') }}">
+  <thead><tr><th>Estudiante</th><th>Materia</th><th>Tema</th><th>Fecha</th><th>Monitor</th><th>Estado</th><th>Asistencia</th></tr></thead>
+  <tbody>{% for s in filas %}
+    <tr><td data-t="Estudiante">{{ s.estudiante }}</td><td data-t="Materia">{{ s.materia }}</td><td data-t="Tema">{{ s.tema }}</td>
+      <td data-t="Fecha">{{ s.fecha_preferida }}</td><td data-t="Monitor">{{ s.monitor or '—' }}</td><td data-t="Estado">{{ estado(s.estado) }}</td>
+      <td data-t="Asistencia">{{ '—' if s.asistio is none else ('Asistió' if s.asistio else 'No asistió') }}</td></tr>
+  {% else %}<tr><td colspan="7">No hay resultados con esos filtros.</td></tr>{% endfor %}</tbody>
+</table></div>
+{% endblock %}
+
+{% block scripts %}<script src="{{ url_for('static', filename='js/reportes.js') }}"></script>{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "app_base.html" %}
+{% from "_macros.html" import csrf %}
+{% block titulo %}Registrar sesión{% endblock %}
+
+{% block contenido %}
+<section class="auth-card">
+  <h1>Registrar <em>sesión</em></h1>
+  <p class="sub">{{ s.estudiante }} · {{ s.materia }} · {{ s.tema }}</p>
+  <form method="post" class="form form--auth" novalidate data-validar>
+    {{ csrf() }}
+    <fieldset class="field checks">
+      <legend>¿El estudiante asistió?</legend>
+      <label class="check"><input type="radio" name="asistio" value="1" {{ 'checked' if datos.get('asistio') == '1' }}> Sí asistió</label>
+      <label class="check"><input type="radio" name="asistio" value="0" {{ 'checked' if datos.get('asistio') == '0' }}> No asistió</label>
+    </fieldset>
+    <div class="field {{ 'is-bad' if errores.get('temas_vistos') }}">
+      <label for="c-temas">Temas vistos</label>
+      <textarea id="c-temas" name="temas_vistos" rows="4" maxlength="300" placeholder="Ej. Regla de la cadena y ejercicios 3 a 8">{{ datos.get('temas_vistos', '') }}</textarea>
+      <small class="err">{{ errores.get('temas_vistos', '') }}</small>
+    </div>
+    <div class="botones">
+      <button class="btn btn--pill btn--ink">Guardar sesión</button>
+      <a class="btn btn--pill btn--ghost-ink" href="{{ url_for('monitor.panel') }}">Volver</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

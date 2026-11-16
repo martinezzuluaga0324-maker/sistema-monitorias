@@ -1,0 +1,28 @@
+{% extends "app_base.html" %}
+{% from "_macros.html" import lista %}
+{% block titulo %}Monitores{% endblock %}
+
+{% block contenido %}
+<div class="page__head"><h1>Monitores <em>disponibles</em></h1></div>
+
+<form method="get" class="filtros">
+  {{ lista('materia', 'Materia', materias, {'materia': materia_id}, {}, 'Todas las materias', false) }}
+  <div class="field"><label for="q">Buscar por nombre</label><input id="q" name="q" value="{{ request.args.get('q', '') }}" placeholder="Ej. Camila"></div>
+  <button class="btn btn--pill btn--ink">Filtrar</button>
+</form>
+
+<div class="monitors__grid">
+  {% for m in monitores %}
+  <article class="mon">
+    <div class="mon__top">
+      <div class="mon__av" aria-hidden="true">{{ m.nombre.split()[:2] | map('first') | join }}</div>
+      <div><h3>{{ m.nombre }}</h3><div class="mon__sub">{{ m.programa }}</div></div>
+    </div>
+    <div class="mon__tags">{% for x in m.materias %}<span class="mon__subject">{{ x }}</span>{% endfor %}</div>
+    <ul class="mon__slots">{% for f in m.franjas %}<li><span>{{ f }}</span></li>{% else %}<li><span>Sin franjas publicadas</span></li>{% endfor %}</ul>
+  </article>
+  {% else %}
+  <p class="vacio">No hay monitores con ese filtro.</p>
+  {% endfor %}
+</div>
+{% endblock %}

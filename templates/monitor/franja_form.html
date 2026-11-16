@@ -1,0 +1,26 @@
+{% extends "app_base.html" %}
+{% from "_macros.html" import csrf, campo %}
+{% block titulo %}{{ 'Editar franja' if franja else 'Nueva franja' }}{% endblock %}
+
+{% block contenido %}
+<section class="auth-card">
+  <h1>{{ 'Editar' if franja else 'Agregar' }} <em>franja</em></h1>
+  <form method="post" class="form form--auth" novalidate data-validar>
+    {{ csrf() }}
+    <div class="field {{ 'is-bad' if errores.get('dia') }}">
+      <label for="c-dia">Día</label>
+      <select id="c-dia" name="dia" required>
+        <option value="">Selecciona el día</option>
+        {% for d in dias %}<option {{ 'selected' if datos.get('dia') == d }}>{{ d }}</option>{% endfor %}
+      </select>
+      <small class="err">{{ errores.get('dia', '') }}</small>
+    </div>
+    {{ campo('hora_inicio', 'Desde', datos, errores, 'time', '', 'required data-msg="Elige la hora de inicio."') }}
+    {{ campo('hora_fin', 'Hasta', datos, errores, 'time', '', 'required data-despues-de="hora_inicio" data-msg="La hora de fin debe ser después de la de inicio."') }}
+    <div class="botones">
+      <button class="btn btn--pill btn--ink">Guardar</button>
+      <a class="btn btn--pill btn--ghost-ink" href="{{ url_for('monitor.panel') }}">Volver</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

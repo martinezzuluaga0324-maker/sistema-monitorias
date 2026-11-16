@@ -1,0 +1,28 @@
+{% extends "app_base.html" %}
+{% from "_macros.html" import accion %}
+{% block titulo %}Usuarios{% endblock %}
+
+{% block contenido %}
+<div class="page__head">
+  <h1><em>Usuarios</em> del sistema</h1>
+  <a class="btn btn--pill btn--amber" href="{{ url_for('bienestar.usuario_nuevo') }}">Nuevo usuario <svg><use href="#i-arrow"/></svg></a>
+</div>
+
+<form method="get" class="filtros">
+  <div class="field"><label for="rol">Rol</label>
+    <select id="rol" name="rol"><option value="">Todos</option>
+      {% for r in roles %}<option value="{{ r }}" {{ 'selected' if rol == r }}>{{ r | capitalize }}</option>{% endfor %}
+    </select></div>
+  <div class="field"><label for="q">Buscar</label><input id="q" name="q" value="{{ request.args.get('q', '') }}" placeholder="Nombre, correo o código"></div>
+  <button class="btn btn--pill btn--ink">Filtrar</button>
+</form>
+
+<div class="tabla-wrap"><table class="tabla">
+  <thead><tr><th>Nombre</th><th>Correo</th><th>Código</th><th>Rol</th><th><span class="sr">Acciones</span></th></tr></thead>
+  <tbody>{% for u in filas %}
+    <tr><td data-t="Nombre">{{ u.nombre }}</td><td data-t="Correo">{{ u.correo }}</td><td data-t="Código">{{ u.codigo or '—' }}</td><td data-t="Rol">{{ u.rol | capitalize }}</td>
+      <td class="acciones"><a class="link" href="{{ url_for('bienestar.usuario_editar', uid=u.id) }}">Editar</a>
+        {% if u.id != usuario.id %}{{ accion(url_for('bienestar.usuario_eliminar', uid=u.id), 'Eliminar', '¿Eliminar a ' ~ u.nombre ~ '? También se borran sus solicitudes.', 'link--peligro') }}{% endif %}</td></tr>
+  {% else %}<tr><td colspan="5">No hay usuarios con ese filtro.</td></tr>{% endfor %}</tbody>
+</table></div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "app_base.html" %}
+{% from "_macros.html" import accion %}
+{% block titulo %}Materias{% endblock %}
+
+{% block contenido %}
+<div class="page__head">
+  <h1><em>Materias</em> con monitoría</h1>
+  <a class="btn btn--pill btn--amber" href="{{ url_for('bienestar.materia_nueva') }}">Nueva materia <svg><use href="#i-arrow"/></svg></a>
+</div>
+<div class="tabla-wrap"><table class="tabla">
+  <thead><tr><th>Materia</th><th>Docente</th><th><span class="sr">Acciones</span></th></tr></thead>
+  <tbody>{% for m in filas %}
+    <tr><td data-t="Materia">{{ m.nombre }}</td><td data-t="Docente">{{ m.docente or 'Sin docente' }}</td>
+      <td class="acciones"><a class="link" href="{{ url_for('bienestar.materia_editar', mid=m.id) }}">Editar</a>
+        {{ accion(url_for('bienestar.materia_eliminar', mid=m.id), 'Eliminar', '¿Eliminar la materia ' ~ m.nombre ~ '?', 'link--peligro') }}</td></tr>
+  {% endfor %}</tbody>
+</table></div>
+{% endblock %}

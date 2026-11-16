@@ -1,0 +1,36 @@
+{% extends "app_base.html" %}
+{% from "_macros.html" import estado, accion %}
+{% block titulo %}Mi agenda{% endblock %}
+
+{% block contenido %}
+<div class="page__head">
+  <h1>Mi <em>agenda</em></h1>
+  <a class="btn btn--pill btn--amber" href="{{ url_for('monitor.nueva_franja') }}">Agregar franja <svg><use href="#i-arrow"/></svg></a>
+</div>
+<p class="sub">Materias que atiendes: {% for m in materias %}<span class="mon__subject">{{ m.nombre }}</span> {% else %}<em>Bienestar aún no te asigna materias.</em>{% endfor %}</p>
+
+<h2 class="h2s">Mis días y horas disponibles</h2>
+{% if franjas %}
+<div class="tabla-wrap"><table class="tabla">
+  <thead><tr><th>Día</th><th>Desde</th><th>Hasta</th><th><span class="sr">Acciones</span></th></tr></thead>
+  <tbody>{% for f in franjas %}
+    <tr><td data-t="Día">{{ f.dia }}</td><td data-t="Desde">{{ f.hora_inicio }}</td><td data-t="Hasta">{{ f.hora_fin }}</td>
+      <td class="acciones"><a class="link" href="{{ url_for('monitor.editar_franja', disp_id=f.id) }}">Editar</a>
+        {{ accion(url_for('monitor.eliminar_franja', disp_id=f.id), 'Eliminar', '¿Eliminar esta franja?', 'link--peligro') }}</td></tr>
+  {% endfor %}</tbody>
+</table></div>
+{% else %}<div class="vacio-caja"><p>Aún no publicas franjas. Los estudiantes no podrán verte hasta que agregues una.</p></div>{% endif %}
+
+<h2 class="h2s">Solicitudes asignadas a mí</h2>
+{% if asignadas %}
+<div class="tabla-wrap"><table class="tabla">
+  <thead><tr><th>Estudiante</th><th>Materia</th><th>Tema</th><th>Fecha</th><th>Estado</th><th><span class="sr">Acciones</span></th></tr></thead>
+  <tbody>{% for s in asignadas %}
+    <tr><td data-t="Estudiante">{{ s.estudiante }}<small>{{ s.codigo }}</small></td><td data-t="Materia">{{ s.materia }}</td>
+      <td data-t="Tema">{{ s.tema }}{% if s.notas %}<small>{{ s.notas }}</small>{% endif %}</td><td data-t="Fecha">{{ s.fecha_preferida }}</td>
+      <td data-t="Estado">{{ estado(s.estado) }}{% if s.estado == 'atendida' %}<small>{{ 'Asistió' if s.asistio else 'No asistió' }}</small>{% endif %}</td>
+      <td class="acciones">{% if s.estado != 'cancelada' %}<a class="link" href="{{ url_for('monitor.sesion', solicitud_id=s.id) }}">{{ 'Corregir sesión' if s.estado == 'atendida' else 'Registrar sesión' }}</a>{% endif %}</td></tr>
+  {% endfor %}</tbody>
+</table></div>
+{% else %}<div class="vacio-caja"><p>Todavía no tienes solicitudes asignadas.</p></div>{% endif %}
+{% endblock %}

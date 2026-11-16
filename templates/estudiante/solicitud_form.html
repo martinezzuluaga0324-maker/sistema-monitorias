@@ -1,0 +1,24 @@
+{% extends "app_base.html" %}
+{% from "_macros.html" import csrf, campo, lista %}
+{% block titulo %}{{ 'Editar solicitud' if solicitud else 'Nueva solicitud' }}{% endblock %}
+
+{% block contenido %}
+<section class="auth-card auth-card--wide">
+  <h1>{% if solicitud %}Editar <em>solicitud</em>{% else %}Pide tu <em>monitoría</em>{% endif %}</h1>
+  <form method="post" class="form" novalidate data-validar>
+    {{ csrf() }}
+    {% set d = datos if datos else {'materia_id': materia_sugerida} %}
+    {{ lista('materia_id', 'Materia', materias, d, errores, 'Selecciona la materia') }}
+    {{ campo('fecha', 'Fecha preferida', d, errores, 'date', '', 'required data-min-hoy data-msg="Elige una fecha desde hoy."') }}
+    <div class="field--wide">{{ campo('tema', 'Tema que necesitas reforzar', d, errores, 'text', 'Ej. Derivadas parciales', 'required minlength="4" maxlength="120" data-msg="Describe el tema (mínimo 4 letras)."') }}</div>
+    <div class="field field--wide">
+      <label for="c-notas">Notas para el monitor <span>(opcional)</span></label>
+      <textarea id="c-notas" name="notas" rows="3" maxlength="240" placeholder="Cuéntale qué has intentado hasta ahora">{{ d.get('notas', '') }}</textarea>
+    </div>
+    <div class="field--wide botones">
+      <button class="btn btn--pill btn--ink">{{ 'Guardar cambios' if solicitud else 'Enviar solicitud' }}</button>
+      <a class="btn btn--pill btn--ghost-ink" href="{{ url_for('estudiante.panel') }}">Volver</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

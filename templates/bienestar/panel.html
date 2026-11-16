@@ -1,0 +1,32 @@
+{% extends "app_base.html" %}
+{% from "_macros.html" import csrf %}
+{% block titulo %}Asignación{% endblock %}
+
+{% block contenido %}
+<div class="page__head"><h1>Solicitudes <em>pendientes</em></h1></div>
+
+{% if pendientes %}
+<div class="remitir">
+  {% for s in pendientes %}
+  <form method="post" action="{{ url_for('bienestar.asignar', solicitud_id=s.id) }}" class="remitir__fila" novalidate data-validar>
+    {{ csrf() }}
+    <div><b>{{ s.materia }} · {{ s.tema }}</b><small>{{ s.estudiante }} · para el {{ s.fecha_preferida }}{% if s.remitida_por %} · remitida por docente{% endif %}</small></div>
+    <div class="field">
+      <select name="monitor_id" required aria-label="Monitor para {{ s.estudiante }}" data-msg="Elige un monitor.">
+        <option value="">{{ 'Elige un monitor' if opciones[s.id] else 'Ningún monitor atiende esta materia' }}</option>
+        {% for m in opciones[s.id] %}<option value="{{ m.id }}">{{ m.nombre }}</option>{% endfor %}
+      </select>
+      <small class="err"></small>
+    </div>
+    <button class="btn btn--pill btn--ink btn--sm" {{ 'disabled' if not opciones[s.id] }}>Asignar</button>
+  </form>
+  {% endfor %}
+</div>
+{% else %}<div class="vacio-caja"><p>No hay solicitudes pendientes. Todo está asignado.</p></div>{% endif %}
+
+<h2 class="h2s">Resumen por materia</h2>
+<div class="tabla-wrap"><table class="tabla">
+  <thead><tr><th>Materia</th><th>Solicitudes</th><th>Atendidas</th><th>Pendientes</th></tr></thead>
+  <tbody>{% for r in resumen %}<tr><td data-t="Materia">{{ r.materia }}</td><td data-t="Solicitudes">{{ r.total }}</td><td data-t="Atendidas">{{ r.atendidas or 0 }}</td><td data-t="Pendientes">{{ r.pendientes or 0 }}</td></tr>{% endfor %}</tbody>
+</table></div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "app_base.html" %}
+{% from "_macros.html" import estado, accion %}
+{% block titulo %}Mis solicitudes{% endblock %}
+
+{% block contenido %}
+<div class="page__head">
+  <h1>Mis <em>solicitudes</em></h1>
+  <a class="btn btn--pill btn--amber" href="{{ url_for('estudiante.nueva') }}">Nueva solicitud <svg><use href="#i-arrow"/></svg></a>
+</div>
+
+{% if solicitudes %}
+<div class="tabla-wrap">
+  <table class="tabla">
+    <thead><tr><th>Materia</th><th>Tema</th><th>Fecha</th><th>Monitor</th><th>Estado</th><th><span class="sr">Acciones</span></th></tr></thead>
+    <tbody>
+    {% for s in solicitudes %}
+      <tr>
+        <td data-t="Materia">{{ s.materia }}</td>
+        <td data-t="Tema">{{ s.tema }}{% if s.remitida_por %}<small>Remitida por tu docente</small>{% endif %}</td>
+        <td data-t="Fecha">{{ s.fecha_preferida }}</td>
+        <td data-t="Monitor">{{ s.monitor or 'Por asignar' }}</td>
+        <td data-t="Estado">{{ estado(s.estado) }}
+          {% if s.estado == 'atendida' %}<small>{{ 'Asististe' if s.asistio else 'No asististe' }}{% if s.temas_vistos %} · {{ s.temas_vistos }}{% endif %}</small>{% endif %}</td>
+        <td class="acciones">
+          {% if s.estado == 'pendiente' %}<a class="link" href="{{ url_for('estudiante.editar', solicitud_id=s.id) }}">Editar</a>{% endif %}
+          {% if s.estado in ('pendiente', 'asignada') %}{{ accion(url_for('estudiante.cancelar', solicitud_id=s.id), 'Cancelar', '¿Cancelar esta solicitud?') }}{% endif %}
+          {% if s.estado in ('pendiente', 'cancelada') %}{{ accion(url_for('estudiante.eliminar', solicitud_id=s.id), 'Eliminar', '¿Eliminar esta solicitud para siempre?', 'link--peligro') }}{% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="vacio-caja">
+  <p>Aún no has pedido ninguna monitoría.</p>
+  <a class="btn btn--pill btn--ink" href="{{ url_for('estudiante.nueva') }}">Pedir mi primera monitoría</a>
+</div>
+{% endif %}
+{% endblock %}

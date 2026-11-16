@@ -1,0 +1,37 @@
+{# Piezas de formulario reutilizables. Cada campo muestra su error del servidor (si hay) debajo. #}
+
+{% macro csrf() %}<input type="hidden" name="csrf" value="{{ csrf_token() }}">{% endmacro %}
+
+{% macro campo(nombre, etiqueta, datos, errores, tipo='text', ayuda='', extra='') %}
+<div class="field {{ 'is-bad' if errores.get(nombre) }}">
+  <label for="c-{{ nombre }}">{{ etiqueta }}</label>
+  <input id="c-{{ nombre }}" name="{{ nombre }}" type="{{ tipo }}" value="{{ datos.get(nombre, '') if tipo != 'password' else '' }}" placeholder="{{ ayuda }}" {{ extra | safe }}>
+  <small class="err">{{ errores.get(nombre, '') }}</small>
+</div>
+{% endmacro %}
+
+{% macro lista(nombre, etiqueta, filas, datos, errores, vacio='Selecciona…', requerido=true, txt='nombre') %}
+{# filas = filas de la base de datos; cada una aporta su "id" (valor) y su nombre (texto) #}
+<div class="field {{ 'is-bad' if errores.get(nombre) }}">
+  <label for="c-{{ nombre }}">{{ etiqueta }}</label>
+  <select id="c-{{ nombre }}" name="{{ nombre }}" {{ 'required' if requerido }}>
+    <option value="">{{ vacio }}</option>
+    {% for f in filas %}
+      <option value="{{ f['id'] }}" {{ 'selected' if datos.get(nombre) | string == f['id'] | string }}>{{ f[txt] }}</option>
+    {% endfor %}
+  </select>
+  <small class="err">{{ errores.get(nombre, '') }}</small>
+</div>
+{% endmacro %}
+
+{# Estado de una solicitud como "etiqueta" de color #}
+{% macro estado(e) %}
+<span class="status {{ {'asignada':'status--ok','atendida':'status--done','cancelada':'status--off'}.get(e, '') }}">{{ e | capitalize }}</span>
+{% endmacro %}
+
+{# Botón que envía un POST (eliminar, cancelar…) pidiendo confirmación antes #}
+{% macro accion(url, texto, confirmar='', clase='') %}
+<form method="post" action="{{ url }}" class="inline" {% if confirmar %}data-confirmar="{{ confirmar }}"{% endif %}>
+  {{ csrf() }}<button class="link {{ clase }}">{{ texto }}</button>
+</form>
+{% endmacro %}
