@@ -3,7 +3,7 @@
 Ejecutar:  python app.py   →  http://127.0.0.1:5000
 """
 import os
-from flask import Flask, render_template, g
+from flask import Flask, render_template, g, request, url_for
 
 import database
 from config import Config
@@ -28,6 +28,11 @@ def crear_app():
 
     # csrf_token() debe verse también dentro de los macros (_macros.html), por eso es global de Jinja.
     app.jinja_env.globals["csrf_token"] = token_csrf
+
+    # url_pagina(n): la dirección de la página actual con ?pagina=n, conservando los filtros.
+    def url_pagina(n):
+        return url_for(request.endpoint, **{**request.view_args, **request.args.to_dict(), "pagina": n})
+    app.jinja_env.globals["url_pagina"] = url_pagina
 
     # Controladores (cada Blueprint agrupa las rutas de un rol).
     for modulo in (publico, auth, estudiante, monitor, docente, bienestar):

@@ -13,4 +13,4 @@ _BD_POR_DEFECTO = "/tmp/monitorias.db" if os.getenv("VERCEL") else os.path.join(
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "clave-solo-para-desarrollo")
     DATABASE = os.getenv("DATABASE", _BD_POR_DEFECTO)
-    DEBUG = os.getenv("FLASK_DEBUG", "1") == "1"
+    DEBUG = os.getenv("FLASK_DEBUG", "0") == "1"

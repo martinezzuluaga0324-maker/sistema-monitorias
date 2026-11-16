@@ -1,5 +1,5 @@
 {% extends "app_base.html" %}
-{% from "_macros.html" import csrf, campo %}
+{% from "_macros.html" import csrf, campo, nota_req %}
 {% block titulo %}{{ 'Editar franja' if franja else 'Nueva franja' }}{% endblock %}
 
 {% block contenido %}
@@ -7,8 +7,9 @@
   <h1>{{ 'Editar' if franja else 'Agregar' }} <em>franja</em></h1>
   <form method="post" class="form form--auth" novalidate data-validar>
     {{ csrf() }}
+    {{ nota_req() }}
     <div class="field {{ 'is-bad' if errores.get('dia') }}">
-      <label for="c-dia">Día</label>
+      <label for="c-dia">Día <span class="req" aria-hidden="true">*</span><span class="sr"> (obligatorio)</span></label>
       <select id="c-dia" name="dia" required>
         <option value="">Selecciona el día</option>
         {% for d in dias %}<option {{ 'selected' if datos.get('dia') == d }}>{{ d }}</option>{% endfor %}

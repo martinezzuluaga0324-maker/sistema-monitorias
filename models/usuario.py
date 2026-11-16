@@ -35,15 +35,19 @@ def verificar(correo, clave):
     return None
 
 
-def listar(rol=None, texto=""):
-    sql, params = "SELECT * FROM usuarios WHERE 1=1", []
+def listar(rol=None, texto="", limite=10, offset=0):
+    """Usuarios filtrados y paginados. Devuelve (filas de la página, total de filas)."""
+    donde, params = " WHERE 1=1", []
     if rol:
-        sql += " AND rol = ?"
+        donde += " AND rol = ?"
         params.append(rol)
     if texto:
-        sql += " AND (nombre LIKE ? OR correo LIKE ? OR codigo LIKE ?)"
+        donde += " AND (nombre LIKE ? OR correo LIKE ? OR codigo LIKE ?)"
         params += [f"%{texto}%"] * 3
-    return get_db().execute(sql + " ORDER BY rol, nombre", params).fetchall()
+    db = get_db()
+    total = db.execute("SELECT COUNT(*) FROM usuarios" + donde, params).fetchone()[0]
+    filas = db.execute("SELECT * FROM usuarios" + donde + " ORDER BY rol, nombre LIMIT ? OFFSET ?", params + [limite, offset]).fetchall()
+    return filas, total
 
 
 def actualizar(usuario_id, nombre, codigo, correo, rol, programa, clave=None):

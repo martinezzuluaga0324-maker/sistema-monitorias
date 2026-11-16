@@ -1,5 +1,5 @@
 {% extends "app_base.html" %}
-{% from "_macros.html" import accion %}
+{% from "_macros.html" import accion, paginacion %}
 {% block titulo %}Usuarios{% endblock %}
 
 {% block contenido %}
@@ -25,4 +25,5 @@
         {% if u.id != usuario.id %}{{ accion(url_for('bienestar.usuario_eliminar', uid=u.id), 'Eliminar', '¿Eliminar a ' ~ u.nombre ~ '? También se borran sus solicitudes.', 'link--peligro') }}{% endif %}</td></tr>
   {% else %}<tr><td colspan="5">No hay usuarios con ese filtro.</td></tr>{% endfor %}</tbody>
 </table></div>
+{{ paginacion(pag) }}
 {% endblock %}

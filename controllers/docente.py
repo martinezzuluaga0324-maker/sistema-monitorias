@@ -4,7 +4,7 @@ from datetime import date
 
 import models.materia as materias
 import models.solicitud as solicitudes
-from controllers.utils import rol_requerido
+from controllers.utils import rol_requerido, paginado
 
 bp = Blueprint("docente", __name__, url_prefix="/docente")
 
@@ -37,8 +37,8 @@ def remitir():
 @rol_requerido("docente")
 def historial():
     materia_id = request.args.get("materia", type=int)
+    filas, pag = paginado(solicitudes.historial_docente, docente_id=g.usuario["id"], materia_id=materia_id, texto=request.args.get("q", "").strip())
     return render_template(
-        "docente/historial.html",
-        filas=solicitudes.historial_docente(g.usuario["id"], materia_id, request.args.get("q", "").strip()),
+        "docente/historial.html", filas=filas, pag=pag,
         materias=materias.de_docente(g.usuario["id"]), materia_id=materia_id,
     )

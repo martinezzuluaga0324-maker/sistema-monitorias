@@ -75,6 +75,7 @@
   <li>Tener a mano VS Code con el proyecto abierto en <code>models/solicitud.py</code> y <code>schema.sql</code>.</li>
   <li>Cargar la página con internet (las fotos y las animaciones se descargan de la red). Si no hay internet, el sistema funciona igual pero la portada se ve con menos imágenes.</li>
   <li>Cerrar notificaciones, poner el zoom del navegador en 100 % y la pantalla en modo presentación.</li>
+  <li>Saber que los datos de ejemplo traen 25 solicitudes y 14 usuarios: así se ve la <b>paginación</b> (10 filas por página) en Reportes y Usuarios.</li>
   <li>Probar el recorrido completo una vez, y volver a ejecutar <code>python init_db.py</code> para dejarlo limpio.</li>
 </ul>
 <h3>Usuarios de ejemplo (la clave de todos es <code>Tandem2026!</code>)</h3>
@@ -162,7 +163,7 @@
   <tr><td>Atendida</td><td>Verde oscuro</td><td>Nada. Muestra si asistió y los temas vistos.</td></tr>
   <tr><td>Cancelada</td><td>Gris</td><td>Solo <em>Eliminar</em>.</td></tr>
 </table>
-<p>Cancelar y eliminar piden confirmación ("¿Cancelar esta solicitud?"). Eliminar borra la fila para siempre.</p>
+<p>Cancelar y eliminar abren una ventana de confirmación con el diseño de la página (no la alerta del navegador): "¿Cancelar esta solicitud?" con los botones <em>No, volver</em> y <em>Sí, continuar</em>. Eliminar borra la fila para siempre.</p>
 <div class="decir">Por seguridad y coherencia, una solicitud solo se edita mientras está pendiente: después ya hay un monitor organizando su tiempo.</div>
 
 <h2>5. Manual del monitor</h2>
@@ -203,16 +204,17 @@
 <h3>7.2 Reportes</h3>
 <div class="paso"><div>Ir a</div><div><p>Menú → <em>Reportes</em>.</p></div></div>
 <div class="paso"><div>Hacer</div><div><p>Elegir materia, monitor o estado, y escribir en el buscador un estudiante o tema.</p></div></div>
-<div class="paso"><div>Resultado</div><div><p>La tabla se actualiza sola mientras escribes, sin recargar, y el contador indica "N resultado(s)". La dirección de la página conserva el filtro.</p></div></div>
+<div class="paso"><div>Resultado</div><div><p>La tabla se actualiza sola mientras escribes, sin recargar, y el contador indica "N resultado(s)". Abajo aparece la <b>paginación</b>: Anterior, números y Siguiente, con "Mostrando 1–10 de 25". Al cambiar de página o de filtro, solo cambia la tabla. La dirección de la página conserva el filtro y la página.</p></div></div>
 <div class="decir">Cada vez que escribo, JavaScript consulta una ruta del servidor que devuelve JSON y reconstruye la tabla. Si JavaScript fallara, el botón Filtrar funciona igual como un formulario normal.</div>
 
+<div class="caja"><b>Los asteriscos:</b> en todos los formularios los campos obligatorios llevan un asterisco rojo <b style="color:#b13a17">*</b> y arriba dice "Campo obligatorio". Señálalo cuando muestres el registro: es uno de los criterios de la rúbrica.</div>
 <h3>7.3 Usuarios (CRUD)</h3>
 <table>
   <tr><th>Acción</th><th>Cómo</th><th>Detalle</th></tr>
-  <tr><td>Listar y buscar</td><td>Menú → Usuarios</td><td>Filtro por rol y búsqueda por nombre, correo o código.</td></tr>
+  <tr><td>Listar y buscar</td><td>Menú → Usuarios</td><td>Filtro por rol, búsqueda por nombre, correo o código y paginación de 10 en 10.</td></tr>
   <tr><td>Crear</td><td>Nuevo usuario</td><td>Nombre, correo, rol, código (obligatorio para estudiantes y monitores), programa, contraseña y materias.</td></tr>
   <tr><td>Editar</td><td>Editar en la fila</td><td>La contraseña se deja vacía si no se quiere cambiar.</td></tr>
-  <tr><td>Eliminar</td><td>Eliminar en la fila</td><td>Pide confirmación y avisa que también se borran sus solicitudes. No se puede eliminar la propia cuenta.</td></tr>
+  <tr><td>Eliminar</td><td>Eliminar en la fila</td><td>Abre una ventana de confirmación propia y avisa que también se borran sus solicitudes. No se puede eliminar la propia cuenta.</td></tr>
 </table>
 <p>Las <em>materias</em> del formulario significan dos cosas según el rol: las que <b>cursa</b> un estudiante, o las que <b>atiende</b> un monitor. Así se arma qué monitores aparecen al asignar.</p>
 <h3>7.4 Materias (CRUD)</h3>

@@ -56,7 +56,7 @@
   <li>Seguridad: qué protege y cómo</li>
   <li>Qué puede hacer cada perfil</li>
   <li>El frontend: diseño, JavaScript y fetch</li>
-  <li>Dónde se cumple cada lineamiento</li>
+  <li>Dónde se cumple cada lineamiento y la rúbrica técnica</li>
   <li>Guion para la demostración en vivo (7 minutos)</li>
   <li>Preguntas probables de la sustentación</li>
   <li>Glosario</li>
@@ -346,6 +346,18 @@ solicitudes ── sesiones                        (uno a uno)</pre>
   <tr><td>Modelo relacional, PK/FK, integridad</td><td><code>schema.sql</code></td></tr>
   <tr><td>GitHub, README, requirements.txt, .env</td><td>Raíz del repositorio</td></tr>
 </table>
+
+<h2>10b. La rúbrica técnica y cómo la cumple el proyecto</h2>
+<p>El profesor evalúa cinco criterios con tres niveles: Excelente (100 %), Aceptable (70 %) e Insuficiente (0 %). Esto es lo que pide el nivel <em>Excelente</em> y dónde se cumple.</p>
+<table>
+  <tr><th>Criterio</th><th>Qué pide el nivel Excelente</th><th>Cómo se cumple</th></tr>
+  <tr><td>Campos obligatorios e interfaz</td><td>Todos los formularios marcan los obligatorios con asterisco (*) y no hay errores ortográficos.</td><td>Cada formulario muestra "* Campo obligatorio" y pone el asterisco rojo en cada etiqueta obligatoria (macros <code>campo</code> y <code>lista</code> en <code>_macros.html</code>). Los textos se revisaron con tildes y ortografía.</td></tr>
+  <tr><td>Validaciones y feedback</td><td>Valida en cliente (JS) y servidor (Python), con alertas visuales (Toast, modales o componentes de la interfaz), no con <code>alert()</code>.</td><td>Cliente: <code>validacion.js</code>. Servidor: <code>utils.py</code>. Avisos tipo Toast para éxitos y errores, mensajes bajo cada campo y una ventana de confirmación propia (<code>&lt;dialog&gt;</code>) en lugar de <code>confirm()</code>. Páginas de error 400, 403, 404 y 500 con el diseño de la página; el modo de depuración (el que muestra el Traceback) viene apagado por defecto.</td></tr>
+  <tr><td>Visualización de datos y paginación</td><td>Paginación funcional e interactiva, con filtros y búsquedas dinámicas que no alteran el diseño.</td><td>Reportes, Usuarios e Historial del docente paginan de 10 en 10 con <code>LIMIT</code> y <code>OFFSET</code> en SQL (<code>models/</code>), y un <code>COUNT(*)</code> para saber cuántas páginas hay. En Reportes, la tabla, los filtros, el buscador y los botones de página se actualizan con <code>fetch</code> sin recargar y la dirección conserva la página. Los datos de ejemplo traen 25 solicitudes y 14 usuarios para que se vea.</td></tr>
+  <tr><td>Conexión a BD y persistencia</td><td>Los datos del frontend se guardan en la base relacional y se comprueba la persistencia en vivo, de forma inmediata.</td><td>SQLite relacional; cada formulario ejecuta un <code>INSERT</code>, <code>UPDATE</code> o <code>DELETE</code> con <code>commit</code> inmediato. Se demuestra en vivo y reiniciando el servidor.</td></tr>
+  <tr><td>Renderizado dinámico (Full Stack)</td><td>Los datos se consumen del backend y no están escritos a mano en el HTML.</td><td>Las pantallas se arman con Jinja2 desde la base, y hay endpoints JSON consumidos con <code>fetch</code>: <code>/api/monitores</code> y <code>/bienestar/api/reportes</code>.</td></tr>
+</table>
+<div class="caja"><b>Para la sustentación:</b> el criterio de renderizado dinámico dice que el frontend debe consumir datos reales del backend. Las pantallas con formularios usan plantillas del servidor (Jinja2), y las que filtran y paginan datos (monitores en la portada y reportes) usan una API JSON. Puedes decirlo así de claro.</div>
 
 <h2>11. Guion para la demostración en vivo (7 minutos)</h2>
 <p>Antes de empezar: ejecuta <code>python init_db.py</code> y <code>python app.py</code>, y abre la portada. Tener dos navegadores o una ventana de incógnito ayuda a cambiar de perfil sin cerrar sesión.</p>

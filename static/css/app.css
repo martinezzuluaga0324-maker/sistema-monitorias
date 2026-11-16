@@ -111,3 +111,30 @@ body.app{background:var(--paper)}
   .tabla td.acciones::before{content:none}
   .tabla td[colspan]{display:block}
 }
+
+/* ---------- Campos obligatorios ---------- */
+.req{color:#b13a17;font-weight:700}
+.field label .req{color:#b13a17}
+.nota-req{font-size:.88rem;color:var(--muted);margin:0 0 4px;grid-column:1/-1}
+
+/* ---------- Paginación ---------- */
+.pag{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:16px}
+.pag__info{color:var(--muted);font-size:.92rem;margin:0}
+.pag__lista{display:flex;gap:6px;flex-wrap:wrap;padding:0;margin:0}
+.pag__lista li{list-style:none;margin:0}
+.pag__lista a,.pag__lista span{display:inline-flex;min-width:40px;height:40px;padding:0 14px;align-items:center;justify-content:center;border-radius:99px;font-weight:500;font-size:.92rem;text-decoration:none;border:1.5px solid var(--line);background:#fff;transition:background .3s,border-color .3s,transform .3s var(--ease)}
+.pag__lista a:hover{border-color:var(--ink);background:var(--sand)}
+.pag__lista a:active{transform:scale(.95)}
+.pag__lista .is-on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.pag__lista .is-off{color:#7a8c89;background:transparent;border-color:transparent}
+
+/* ---------- Ventana de confirmación propia (en lugar del confirm() del navegador) ---------- */
+.confirmar{margin:auto;border:0;border-radius:var(--r);padding:28px;width:min(92vw,420px);background:var(--paper);color:var(--text);box-shadow:0 40px 90px -20px rgba(12,43,44,.6)}
+.confirmar::backdrop{background:rgba(12,43,44,.55);backdrop-filter:blur(6px)}
+.confirmar[open]{animation:pop .5s var(--ease)}
+.confirmar h2{font:400 1.6rem var(--serif);margin:0 0 8px;border:0;padding:0}
+.confirmar p{color:var(--muted);margin:0 0 22px}
+.confirmar .botones{justify-content:flex-end}
+.btn--peligro{background:#b13a17;color:#fff}
+.btn--peligro:hover{background:#8f2d12}
+@keyframes pop{from{opacity:0;transform:translateY(24px) scale(.96)}}

@@ -4,6 +4,7 @@
 
 {% block contenido %}
 <div class="page__head"><h1>Mis <em>estudiantes</em></h1></div>
+<p class="nota-req"><span class="req">*</span> Campo obligatorio</p>
 <p class="sub">Remite a monitoría a quien necesite refuerzo. Solo ves a los inscritos en tus materias.</p>
 
 {% if estudiantes %}
@@ -15,7 +16,7 @@
     <input type="hidden" name="materia_id" value="{{ e.materia_id }}">
     <div><b>{{ e.nombre }}</b><small>{{ e.codigo }} · {{ e.materia }}</small></div>
     <div class="field">
-      <input name="tema" required minlength="4" maxlength="120" placeholder="Tema que debe reforzar" aria-label="Tema para {{ e.nombre }}" data-msg="Escribe el tema (mínimo 4 letras).">
+      <input name="tema" required minlength="4" maxlength="120" placeholder="Tema que debe reforzar *" aria-label="Tema para {{ e.nombre }}" data-msg="Escribe el tema (mínimo 4 letras).">
       <small class="err"></small>
     </div>
     <button class="btn btn--pill btn--ink btn--sm">Remitir</button>

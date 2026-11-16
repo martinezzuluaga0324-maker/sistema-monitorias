@@ -74,9 +74,21 @@ def monitores_para_materia(materia_id):
     ).fetchall()
 
 
-def reporte(materia_id=None, monitor_id=None, estado=None, texto=""):
-    """Reporte filtrable (HU-10) y búsqueda dinámica."""
-    sql, params = BASE + " WHERE 1=1", []
+def _pagina(sql_where, params, limite, offset):
+    """Cuenta cuántas filas cumplen el filtro y devuelve solo las de la página pedida.
+    COUNT(*) da el total (para saber cuántas páginas hay); LIMIT/OFFSET trae solo un trozo."""
+    db = get_db()
+    total = db.execute(
+        "SELECT COUNT(*) FROM solicitudes s JOIN materias ma ON ma.id = s.materia_id "
+        "JOIN usuarios e ON e.id = s.estudiante_id " + sql_where, params).fetchone()[0]
+    filas = db.execute(
+        BASE + sql_where + " ORDER BY s.creado_en DESC, s.id DESC LIMIT ? OFFSET ?", params + [limite, offset]).fetchall()
+    return filas, total
+
+
+def reporte(materia_id=None, monitor_id=None, estado=None, texto="", limite=10, offset=0):
+    """Reporte filtrable y paginado (HU-10). Devuelve (filas de la página, total de filas)."""
+    sql, params = " WHERE 1=1", []
     if materia_id:
         sql += " AND s.materia_id = ?"; params.append(materia_id)
     if monitor_id:
@@ -85,7 +97,7 @@ def reporte(materia_id=None, monitor_id=None, estado=None, texto=""):
         sql += " AND s.estado = ?"; params.append(estado)
     if texto:
         sql += " AND (s.tema LIKE ? OR e.nombre LIKE ?)"; params += [f"%{texto}%"] * 2
-    return get_db().execute(sql + " ORDER BY s.creado_en DESC", params).fetchall()
+    return _pagina(sql, params, limite, offset)
 
 
 def resumen_por_materia():
@@ -115,12 +127,11 @@ def registrar_sesion(solicitud_id, asistio, temas):
 
 
 # ----- Docente -----
-def historial_docente(docente_id, materia_id=None, texto=""):
-    """Solicitudes de los estudiantes de las materias de ese docente (HU-8)."""
-    sql = BASE + " WHERE ma.docente_id = ?"
-    params = [docente_id]
+def historial_docente(docente_id, materia_id=None, texto="", limite=10, offset=0):
+    """Solicitudes de los estudiantes de las materias de ese docente, paginadas (HU-8)."""
+    sql, params = " WHERE ma.docente_id = ?", [docente_id]
     if materia_id:
         sql += " AND s.materia_id = ?"; params.append(materia_id)
     if texto:
         sql += " AND (e.nombre LIKE ? OR s.tema LIKE ?)"; params += [f"%{texto}%"] * 2
-    return get_db().execute(sql + " ORDER BY s.creado_en DESC", params).fetchall()
+    return _pagina(sql, params, limite, offset)

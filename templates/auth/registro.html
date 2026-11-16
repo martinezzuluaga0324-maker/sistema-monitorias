@@ -1,5 +1,5 @@
 {% extends "app_base.html" %}
-{% from "_macros.html" import csrf, campo %}
+{% from "_macros.html" import csrf, campo, nota_req %}
 {% block titulo %}Crear cuenta{% endblock %}
 
 {% block contenido %}
@@ -7,6 +7,7 @@
   <h1>Crea tu cuenta de <em>estudiante</em></h1>
   <form method="post" class="form" novalidate data-validar>
     {{ csrf() }}
+    {{ nota_req() }}
     {{ campo('nombre', 'Nombre completo', datos, errores, 'text', 'Ej. Laura Gómez', 'required autocomplete="name" data-min-palabras="2" data-msg="Escribe nombre y apellido."') }}
     {{ campo('codigo', 'Código estudiantil', datos, errores, 'text', 'Ej. 20231045', 'required inputmode="numeric" pattern="\\d{6,10}" data-msg="El código tiene entre 6 y 10 dígitos."') }}
     {{ campo('correo', 'Correo institucional', datos, errores, 'email', 'nombre@universidad.edu.co', 'required autocomplete="email" data-msg="Escribe un correo válido."') }}
@@ -14,7 +15,7 @@
     {{ campo('clave', 'Contraseña', datos, errores, 'password', 'Mínimo 8 caracteres', 'required minlength="8" autocomplete="new-password" data-msg="Mínimo 8 caracteres."') }}
 
     <fieldset class="field field--wide checks">
-      <legend>Materias que cursas</legend>
+      <legend>Materias que cursas <span>(opcional)</span></legend>
       {% for m in materias %}
         <label class="check"><input type="checkbox" name="materias" value="{{ m.id }}" {{ 'checked' if m.id | string in datos.getlist('materias') }}> {{ m.nombre }}</label>
       {% endfor %}

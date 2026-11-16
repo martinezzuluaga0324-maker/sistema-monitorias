@@ -1,5 +1,5 @@
 {% extends "app_base.html" %}
-{% from "_macros.html" import csrf, campo, lista %}
+{% from "_macros.html" import csrf, campo, lista, nota_req %}
 {% block titulo %}{{ 'Editar materia' if m else 'Nueva materia' }}{% endblock %}
 
 {% block contenido %}
@@ -7,8 +7,9 @@
   <h1>{{ 'Editar' if m else 'Nueva' }} <em>materia</em></h1>
   <form method="post" class="form form--auth" novalidate data-validar>
     {{ csrf() }}
+    {{ nota_req() }}
     {{ campo('nombre', 'Nombre de la materia', datos, errores, 'text', 'Ej. Cálculo II', 'required minlength="3" data-msg="Mínimo 3 letras."') }}
-    {{ lista('docente_id', 'Docente', docentes, {'docente_id': datos.get('docente_id')}, errores, 'Sin docente', false) }}
+    {{ lista('docente_id', 'Docente (opcional)', docentes, {'docente_id': datos.get('docente_id')}, errores, 'Sin docente', false) }}
     <div class="botones">
       <button class="btn btn--pill btn--ink">Guardar</button>
       <a class="btn btn--pill btn--ghost-ink" href="{{ url_for('bienestar.materias_lista') }}">Volver</a>

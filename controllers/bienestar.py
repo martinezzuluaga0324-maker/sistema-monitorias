@@ -5,7 +5,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 import models.usuario as usuarios
 import models.materia as materias
 import models.solicitud as solicitudes
-from controllers.utils import rol_requerido, validar_usuario, ids_de
+from controllers.utils import rol_requerido, validar_usuario, ids_de, paginado
 
 bp = Blueprint("bienestar", __name__, url_prefix="/bienestar")
 
@@ -49,8 +49,9 @@ def _filtros():
 @rol_requerido("bienestar")
 def reportes():
     f = _filtros()
+    filas, pag = paginado(solicitudes.reporte, **f)
     return render_template(
-        "bienestar/reportes.html", filas=solicitudes.reporte(**f), materias=materias.listar(),
+        "bienestar/reportes.html", filas=filas, pag=pag, materias=materias.listar(),
         monitores=usuarios.por_rol("monitor"), f=f,
     )
 
@@ -59,13 +60,16 @@ def reportes():
 @rol_requerido("bienestar")
 def api_reportes():
     """Misma consulta en JSON: la página la pide con fetch() mientras se escribe en el buscador."""
-    filas = solicitudes.reporte(**_filtros())
-    return jsonify([
-        {"id": s["id"], "estudiante": s["estudiante"], "materia": s["materia"], "tema": s["tema"],
-         "fecha": s["fecha_preferida"], "monitor": s["monitor"] or "—", "estado": s["estado"],
-         "asistio": None if s["asistio"] is None else bool(s["asistio"])}
-        for s in filas
-    ])
+    filas, pag = paginado(solicitudes.reporte, **_filtros())
+    return jsonify({
+        "pagina": pag["pagina"], "paginas": pag["paginas"], "total": pag["total"],
+        "filas": [
+            {"id": s["id"], "estudiante": s["estudiante"], "materia": s["materia"], "tema": s["tema"],
+             "fecha": s["fecha_preferida"], "monitor": s["monitor"] or "—", "estado": s["estado"],
+             "asistio": None if s["asistio"] is None else bool(s["asistio"])}
+            for s in filas
+        ],
+    })
 
 
 # ---------- CRUD de usuarios ----------
@@ -73,7 +77,8 @@ def api_reportes():
 @rol_requerido("bienestar")
 def usuarios_lista():
     rol = request.args.get("rol") or None
-    return render_template("bienestar/usuarios.html", filas=usuarios.listar(rol, request.args.get("q", "").strip()), rol=rol, roles=usuarios.ROLES)
+    filas, pag = paginado(usuarios.listar, rol=rol, texto=request.args.get("q", "").strip())
+    return render_template("bienestar/usuarios.html", filas=filas, pag=pag, rol=rol, roles=usuarios.ROLES)
 
 
 @bp.route("/usuarios/nuevo", methods=["GET", "POST"])

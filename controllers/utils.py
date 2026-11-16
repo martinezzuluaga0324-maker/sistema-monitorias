@@ -111,6 +111,31 @@ def validar_franja(f):
     return e
 
 
+POR_PAGINA = 10
+
+
+def paginar():
+    """Lee ?pagina=N de la dirección y calcula el OFFSET. Devuelve (pagina, offset)."""
+    pagina = max(request.args.get("pagina", 1, type=int), 1)
+    return pagina, (pagina - 1) * POR_PAGINA
+
+
+def info_paginas(pagina, total):
+    """Datos que necesita la plantilla para dibujar los botones de paginación."""
+    paginas = max((total + POR_PAGINA - 1) // POR_PAGINA, 1)
+    return {"pagina": min(pagina, paginas), "paginas": paginas, "total": total, "por_pagina": POR_PAGINA}
+
+
 def ids_de(lista):
     """Convierte los valores de un select/checkbox múltiple en enteros."""
     return [int(x) for x in lista if str(x).isdigit()]
+
+
+def paginado(consulta, **filtros):
+    """Ejecuta una consulta de un modelo para la página pedida. Devuelve (filas, info de paginación)."""
+    pagina, offset = paginar()
+    filas, total = consulta(limite=POR_PAGINA, offset=offset, **filtros)
+    info = info_paginas(pagina, total)
+    if info["pagina"] != pagina:  # pidieron una página que no existe: se muestra la última
+        filas, total = consulta(limite=POR_PAGINA, offset=(info["pagina"] - 1) * POR_PAGINA, **filtros)
+    return filas, info

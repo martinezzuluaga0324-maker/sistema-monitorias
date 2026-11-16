@@ -1,5 +1,5 @@
 {% extends "app_base.html" %}
-{% from "_macros.html" import csrf %}
+{% from "_macros.html" import csrf, nota_req %}
 {% block titulo %}Ingresar{% endblock %}
 
 {% block contenido %}
@@ -8,13 +8,14 @@
   {% if error %}<p class="alerta" role="alert">{{ error }}</p>{% endif %}
   <form method="post" class="form form--auth" novalidate data-validar>
     {{ csrf() }}
+    {{ nota_req() }}
     <div class="field">
-      <label for="correo">Correo institucional</label>
+      <label for="correo">Correo institucional <span class="req" aria-hidden="true">*</span></label>
       <input id="correo" name="correo" type="email" autocomplete="email" required placeholder="nombre@universidad.edu.co" value="{{ request.form.get('correo', '') }}">
       <small class="err"></small>
     </div>
     <div class="field">
-      <label for="clave">Contraseña</label>
+      <label for="clave">Contraseña <span class="req" aria-hidden="true">*</span></label>
       <input id="clave" name="clave" type="password" autocomplete="current-password" required>
       <small class="err"></small>
     </div>

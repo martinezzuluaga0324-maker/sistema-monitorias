@@ -1,5 +1,5 @@
 {% extends "app_base.html" %}
-{% from "_macros.html" import csrf, campo %}
+{% from "_macros.html" import csrf, campo, nota_req %}
 {% block titulo %}{{ 'Editar usuario' if u else 'Nuevo usuario' }}{% endblock %}
 
 {% block contenido %}
@@ -7,17 +7,18 @@
   <h1>{{ 'Editar' if u else 'Nuevo' }} <em>usuario</em></h1>
   <form method="post" class="form" novalidate data-validar>
     {{ csrf() }}
+    {{ nota_req() }}
     {{ campo('nombre', 'Nombre completo', datos, errores, 'text', '', 'required data-min-palabras="2" data-msg="Escribe nombre y apellido."') }}
     {{ campo('correo', 'Correo', datos, errores, 'email', '', 'required data-msg="Escribe un correo válido."') }}
     <div class="field {{ 'is-bad' if errores.get('rol') }}">
-      <label for="c-rol">Rol</label>
+      <label for="c-rol">Rol <span class="req" aria-hidden="true">*</span><span class="sr"> (obligatorio)</span></label>
       <select id="c-rol" name="rol" required>
         <option value="">Selecciona el rol</option>
         {% for r in roles %}<option value="{{ r }}" {{ 'selected' if datos.get('rol') == r }}>{{ r | capitalize }}</option>{% endfor %}
       </select>
       <small class="err">{{ errores.get('rol', '') }}</small>
     </div>
-    {{ campo('codigo', 'Código (estudiantes y monitores)', datos, errores, 'text', '', 'inputmode="numeric" pattern="\\d{6,10}" data-msg="El código tiene entre 6 y 10 dígitos."') }}
+    {{ campo('codigo', 'Código (obligatorio para estudiantes y monitores)', datos, errores, 'text', '', 'inputmode="numeric" pattern="\\d{6,10}" data-msg="El código tiene entre 6 y 10 dígitos."') }}
     {{ campo('programa', 'Programa', datos, errores, 'text') }}
     {{ campo('clave', 'Contraseña' ~ (' (déjala vacía para no cambiarla)' if u else ''), datos, errores, 'password', 'Mínimo 8 caracteres', ('minlength="8"' if u else 'required minlength="8"') ~ ' autocomplete="new-password" data-msg="Mínimo 8 caracteres."') }}
 

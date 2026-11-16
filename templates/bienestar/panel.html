@@ -6,6 +6,7 @@
 <div class="page__head"><h1>Solicitudes <em>pendientes</em></h1></div>
 
 {% if pendientes %}
+<p class="nota-req"><span class="req">*</span> Campo obligatorio</p>
 <div class="remitir">
   {% for s in pendientes %}
   <form method="post" action="{{ url_for('bienestar.asignar', solicitud_id=s.id) }}" class="remitir__fila" novalidate data-validar>
@@ -13,7 +14,7 @@
     <div><b>{{ s.materia }} · {{ s.tema }}</b><small>{{ s.estudiante }} · para el {{ s.fecha_preferida }}{% if s.remitida_por %} · remitida por docente{% endif %}</small></div>
     <div class="field">
       <select name="monitor_id" required aria-label="Monitor para {{ s.estudiante }}" data-msg="Elige un monitor.">
-        <option value="">{{ 'Elige un monitor' if opciones[s.id] else 'Ningún monitor atiende esta materia' }}</option>
+        <option value="">{{ 'Elige un monitor *' if opciones[s.id] else 'Ningún monitor atiende esta materia' }}</option>
         {% for m in opciones[s.id] %}<option value="{{ m.id }}">{{ m.nombre }}</option>{% endfor %}
       </select>
       <small class="err"></small>

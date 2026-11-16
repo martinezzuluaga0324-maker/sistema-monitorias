@@ -122,7 +122,12 @@ Un estudiante nuevo puede crear su cuenta en `/registro`. Monitores y docentes l
 
 ## Autores
 
-Equipo del proyecto final · Ingeniería de Sistemas.
+- Jose Julian Martinez
+- Jhonatan Esquivel
+- Raul Galvan
+- Alejandro Palomino
+
+Proyecto final · Ingeniería de Sistemas.
 
 ## Guía de funcionamiento
 

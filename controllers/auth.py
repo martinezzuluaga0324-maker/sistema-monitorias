@@ -16,6 +16,8 @@ def registro():
     errores, datos = {}, request.form
     if request.method == "POST":
         errores = validar_usuario({**request.form, "rol": "estudiante"})
+        if not request.form.get("programa", "").strip():
+            errores["programa"] = "Escribe tu programa."
         if "correo" not in errores and usuarios.por_correo(request.form["correo"]):
             errores["correo"] = "Ese correo ya está registrado."
         if "codigo" not in errores and usuarios.por_codigo(request.form["codigo"].strip()):

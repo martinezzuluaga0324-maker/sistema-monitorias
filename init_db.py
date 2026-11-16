@@ -81,6 +81,34 @@ def main():
     db.execute("INSERT INTO sesiones (solicitud_id, asistio, temas_vistos) VALUES (?, 1, ?)", (s4, "Z-score y tablas de la normal"))
     sol(ids_est[1], "Álgebra Lineal", "Valores propios", -6, "cancelada")
 
+    # Más estudiantes y solicitudes para que la paginación y los filtros se vean con datos reales.
+    for nombre, cod in [("Diana Ríos", "20232004"), ("Camilo Torres", "20232005"), ("Natalia Pardo", "20232006"), ("Esteban Cruz", "20232007")]:
+        ids_est.append(usuario(nombre, cod, nombre.split()[0].lower() + "@tandem.edu", "estudiante", "Ingeniería de Sistemas"))
+    atiende = {  # materia -> monitor que la atiende
+        "Cálculo I": ids_mon[0], "Álgebra Lineal": ids_mon[0], "Programación": ids_mon[1], "Bases de Datos": ids_mon[1],
+        "Física I": ids_mon[2], "Estadística": ids_mon[3],
+    }
+    temas = {
+        "Cálculo I": ["Límites", "Regla de la cadena", "Integrales por partes", "Optimización"],
+        "Álgebra Lineal": ["Matrices inversas", "Determinantes", "Espacios vectoriales"],
+        "Programación": ["Funciones en Python", "Diccionarios", "Recursión", "Archivos"],
+        "Bases de Datos": ["Normalización", "Consultas JOIN", "Llaves foráneas"],
+        "Física I": ["Leyes de Newton", "Energía cinética", "Movimiento circular"],
+        "Estadística": ["Media y varianza", "Regresión lineal", "Probabilidad condicional"],
+    }
+    estados = ["atendida", "atendida", "asignada", "pendiente", "cancelada", "atendida", "pendiente"]
+    n = 0
+    for materia, lista_temas in temas.items():
+        for tema in lista_temas:
+            estado = estados[n % len(estados)]
+            est = ids_est[n % len(ids_est)]
+            mon = atiende[materia] if estado in ("asignada", "atendida") else None
+            sid = sol(est, materia, tema, (n % 9) - 6, estado, mon)
+            if estado == "atendida":
+                db.execute("INSERT INTO sesiones (solicitud_id, asistio, temas_vistos) VALUES (?, ?, ?)",
+                           (sid, 0 if n % 5 == 4 else 1, "Repaso de " + tema.lower() + " con ejercicios"))
+            n += 1
+
     db.commit()
     db.close()
     print("Base de datos creada en", Config.DATABASE)

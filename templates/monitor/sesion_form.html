@@ -1,5 +1,5 @@
 {% extends "app_base.html" %}
-{% from "_macros.html" import csrf %}
+{% from "_macros.html" import csrf, nota_req %}
 {% block titulo %}Registrar sesión{% endblock %}
 
 {% block contenido %}
@@ -8,13 +8,14 @@
   <p class="sub">{{ s.estudiante }} · {{ s.materia }} · {{ s.tema }}</p>
   <form method="post" class="form form--auth" novalidate data-validar>
     {{ csrf() }}
+    {{ nota_req() }}
     <fieldset class="field checks">
-      <legend>¿El estudiante asistió?</legend>
+      <legend>¿El estudiante asistió? <span class="req" aria-hidden="true">*</span></legend>
       <label class="check"><input type="radio" name="asistio" value="1" {{ 'checked' if datos.get('asistio') == '1' }}> Sí asistió</label>
       <label class="check"><input type="radio" name="asistio" value="0" {{ 'checked' if datos.get('asistio') == '0' }}> No asistió</label>
     </fieldset>
     <div class="field {{ 'is-bad' if errores.get('temas_vistos') }}">
-      <label for="c-temas">Temas vistos</label>
+      <label for="c-temas">Temas vistos <span>(obligatorios si asistió)</span></label>
       <textarea id="c-temas" name="temas_vistos" rows="4" maxlength="300" placeholder="Ej. Regla de la cadena y ejercicios 3 a 8">{{ datos.get('temas_vistos', '') }}</textarea>
       <small class="err">{{ errores.get('temas_vistos', '') }}</small>
     </div>

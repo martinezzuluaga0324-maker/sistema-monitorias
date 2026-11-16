@@ -1,5 +1,5 @@
 {% extends "app_base.html" %}
-{% from "_macros.html" import csrf, campo, lista %}
+{% from "_macros.html" import csrf, campo, lista, nota_req %}
 {% block titulo %}{{ 'Editar solicitud' if solicitud else 'Nueva solicitud' }}{% endblock %}
 
 {% block contenido %}
@@ -7,6 +7,7 @@
   <h1>{% if solicitud %}Editar <em>solicitud</em>{% else %}Pide tu <em>monitoría</em>{% endif %}</h1>
   <form method="post" class="form" novalidate data-validar>
     {{ csrf() }}
+    {{ nota_req() }}
     {% set d = datos if datos else {'materia_id': materia_sugerida} %}
     {{ lista('materia_id', 'Materia', materias, d, errores, 'Selecciona la materia') }}
     {{ campo('fecha', 'Fecha preferida', d, errores, 'date', '', 'required data-min-hoy data-msg="Elige una fecha desde hoy."') }}

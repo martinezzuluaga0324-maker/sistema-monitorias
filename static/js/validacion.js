@@ -71,9 +71,31 @@
     });
   });
 
-  /* ---------- Confirmación antes de acciones peligrosas (eliminar, cancelar) ---------- */
+  /* ---------- Confirmación antes de acciones peligrosas (eliminar, cancelar) ----------
+     Se usa una ventana propia (<dialog>) con el diseño de la página, no el confirm() del navegador. */
+  const dialogo = document.createElement('dialog');
+  dialogo.className = 'confirmar';
+  dialogo.innerHTML = `
+    <h2>¿Estás seguro?</h2>
+    <p id="confirmarTexto"></p>
+    <div class="botones">
+      <button type="button" class="btn btn--pill btn--ghost-ink" data-no>No, volver</button>
+      <button type="button" class="btn btn--pill btn--peligro" data-si>Sí, continuar</button>
+    </div>`;
+  document.body.appendChild(dialogo);
+  let formPendiente = null;
+
   document.addEventListener('submit', e => {
     const f = e.target.closest('form[data-confirmar]');
-    if (f && !confirm(f.dataset.confirmar)) e.preventDefault();
+    if (!f) return;
+    e.preventDefault();                                   // se detiene el envío hasta que la persona confirme
+    formPendiente = f;
+    dialogo.querySelector('#confirmarTexto').textContent = f.dataset.confirmar;
+    dialogo.showModal();
+    dialogo.querySelector('[data-no]').focus();
+  });
+  dialogo.addEventListener('click', e => {
+    if (e.target.matches('[data-si]') && formPendiente) { const f = formPendiente; formPendiente = null; dialogo.close(); f.submit(); }
+    else if (e.target.matches('[data-no]') || e.target === dialogo) { formPendiente = null; dialogo.close(); }
   });
 })();

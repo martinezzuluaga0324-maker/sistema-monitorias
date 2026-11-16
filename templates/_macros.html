@@ -1,10 +1,13 @@
 {# Piezas de formulario reutilizables. Cada campo muestra su error del servidor (si hay) debajo. #}
 
+{# Aviso que se pone al inicio de cada formulario con campos obligatorios #}
+{% macro nota_req() %}<p class="nota-req"><span class="req">*</span> Campo obligatorio</p>{% endmacro %}
+
 {% macro csrf() %}<input type="hidden" name="csrf" value="{{ csrf_token() }}">{% endmacro %}
 
 {% macro campo(nombre, etiqueta, datos, errores, tipo='text', ayuda='', extra='') %}
 <div class="field {{ 'is-bad' if errores.get(nombre) }}">
-  <label for="c-{{ nombre }}">{{ etiqueta }}</label>
+  <label for="c-{{ nombre }}">{{ etiqueta }}{% if 'required' in extra %} <span class="req" aria-hidden="true">*</span><span class="sr"> (obligatorio)</span>{% endif %}</label>
   <input id="c-{{ nombre }}" name="{{ nombre }}" type="{{ tipo }}" value="{{ datos.get(nombre, '') if tipo != 'password' else '' }}" placeholder="{{ ayuda }}" {{ extra | safe }}>
   <small class="err">{{ errores.get(nombre, '') }}</small>
 </div>
@@ -13,7 +16,7 @@
 {% macro lista(nombre, etiqueta, filas, datos, errores, vacio='Selecciona…', requerido=true, txt='nombre') %}
 {# filas = filas de la base de datos; cada una aporta su "id" (valor) y su nombre (texto) #}
 <div class="field {{ 'is-bad' if errores.get(nombre) }}">
-  <label for="c-{{ nombre }}">{{ etiqueta }}</label>
+  <label for="c-{{ nombre }}">{{ etiqueta }}{% if requerido %} <span class="req" aria-hidden="true">*</span><span class="sr"> (obligatorio)</span>{% endif %}</label>
   <select id="c-{{ nombre }}" name="{{ nombre }}" {{ 'required' if requerido }}>
     <option value="">{{ vacio }}</option>
     {% for f in filas %}
@@ -34,4 +37,26 @@
 <form method="post" action="{{ url }}" class="inline" {% if confirmar %}data-confirmar="{{ confirmar }}"{% endif %}>
   {{ csrf() }}<button class="link {{ clase }}">{{ texto }}</button>
 </form>
+{% endmacro %}
+
+{# Paginación: botones Anterior / números / Siguiente que conservan los filtros de la dirección.
+   url_pagina(n) la define app.py. Los números lejos de la página actual se resumen con "…". #}
+{% macro paginacion(pag) %}
+{% set desde = ((pag.pagina - 1) * pag.por_pagina + 1) if pag.total else 0 %}
+{% set hasta = [pag.pagina * pag.por_pagina, pag.total] | min %}
+<nav class="pag" id="paginacion" aria-label="Paginación">
+  <p class="pag__info" id="pagInfo">Mostrando {{ desde }}–{{ hasta }} de {{ pag.total }}</p>
+  {% if pag.paginas > 1 %}
+  <ul class="pag__lista">
+    <li>{% if pag.pagina > 1 %}<a href="{{ url_pagina(pag.pagina - 1) }}">Anterior</a>{% else %}<span class="is-off">Anterior</span>{% endif %}</li>
+    {% for n in range(1, pag.paginas + 1) %}
+      {% if n == 1 or n == pag.paginas or (n - pag.pagina) | abs <= 1 %}
+        <li>{% if n == pag.pagina %}<span class="is-on" aria-current="page">{{ n }}</span>{% else %}<a href="{{ url_pagina(n) }}" aria-label="Página {{ n }}">{{ n }}</a>{% endif %}</li>
+      {% elif (n - pag.pagina) | abs == 2 %}<li><span class="is-off">…</span></li>
+      {% endif %}
+    {% endfor %}
+    <li>{% if pag.pagina < pag.paginas %}<a href="{{ url_pagina(pag.pagina + 1) }}">Siguiente</a>{% else %}<span class="is-off">Siguiente</span>{% endif %}</li>
+  </ul>
+  {% endif %}
+</nav>
 {% endmacro %}
