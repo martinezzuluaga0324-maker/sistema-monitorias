@@ -2,6 +2,7 @@
 
 Ejecutar:  python app.py   →  http://127.0.0.1:5000
 """
+import os
 from flask import Flask, render_template, g
 
 import database
@@ -53,6 +54,12 @@ def crear_app():
 
 
 app = crear_app()
+
+# Si todavía no existe la base de datos (primer arranque, o servidor sin disco persistente como Vercel),
+# se crea con los datos de ejemplo.
+if not os.path.exists(app.config["DATABASE"]):
+    import init_db
+    init_db.main()
 
 if __name__ == "__main__":
     app.run(debug=app.config["DEBUG"])

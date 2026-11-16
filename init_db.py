@@ -3,6 +3,7 @@
 Ejecutar una vez:  python init_db.py
 (Cuidado: borra y recrea las tablas.)
 """
+import os
 import sqlite3
 from datetime import date, timedelta
 from werkzeug.security import generate_password_hash
@@ -15,7 +16,7 @@ CLAVE_DEMO = "Tandem2026!"
 def main():
     db = sqlite3.connect(Config.DATABASE)
     db.execute("PRAGMA foreign_keys = ON")
-    with open("schema.sql", encoding="utf-8") as f:
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "schema.sql"), encoding="utf-8") as f:
         db.executescript(f.read())
 
     h = generate_password_hash(CLAVE_DEMO)
