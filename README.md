@@ -123,3 +123,7 @@ Un estudiante nuevo puede crear su cuenta en `/registro`. Monitores y docentes l
 ## Autores
 
 Equipo del proyecto final · Ingeniería de Sistemas.
+
+## Guía de funcionamiento
+
+En `docs/Guia_de_funcionamiento_Tandem.pdf` hay una guía completa: arquitectura, base de datos, seguridad, guion de la demostración y preguntas probables de la sustentación.
