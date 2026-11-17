@@ -128,7 +128,3 @@ Un estudiante nuevo puede crear su cuenta en `/registro`. Monitores y docentes l
 - Alejandro Palomino
 
 Proyecto final · Ingeniería de Sistemas.
-
-## Guía de funcionamiento
-
-En `docs/Guia_de_funcionamiento_Tandem.pdf` y `docs/Manual_de_usuario_y_presentacion_Tandem.pdf` hay una guía completa: arquitectura, base de datos, seguridad, guion de la demostración y preguntas probables de la sustentación.
