@@ -6,33 +6,33 @@
 <style>
   @page{size:A4;margin:18mm 16mm 18mm 16mm}
   *{box-sizing:border-box}
-  body{font:10.5pt/1.55 "Segoe UI",Arial,sans-serif;color:#14302f;margin:0}
-  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:#0c2b2c;line-height:1.15}
+  body{font:10.5pt/1.55 "Segoe UI",Arial,sans-serif;color:#1d1846;margin:0}
+  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:#14103a;line-height:1.15}
   h1{font-size:30pt;margin:0 0 6pt;font-weight:400}
-  h2{font-size:17pt;margin:26pt 0 8pt;padding-top:8pt;border-top:2px solid #f0a030;font-weight:400;page-break-after:avoid}
+  h2{font-size:17pt;margin:26pt 0 8pt;padding-top:8pt;border-top:2px solid #ffd23f;font-weight:400;page-break-after:avoid}
   h3{font-size:12.5pt;margin:16pt 0 4pt;font-weight:700;page-break-after:avoid}
   p{margin:0 0 7pt}
   ul,ol{margin:0 0 8pt;padding-left:18pt}
   li{margin-bottom:3pt}
-  code{font:9.5pt Consolas,monospace;background:#efe8d8;padding:1pt 4pt;border-radius:3pt}
+  code{font:9.5pt Consolas,monospace;background:#eee9ff;padding:1pt 4pt;border-radius:3pt}
   table{width:100%;border-collapse:collapse;margin:6pt 0 12pt;font-size:9.6pt}
-  th{background:#0c2b2c;color:#f7f2e8;text-align:left;padding:5pt 7pt;font-weight:600}
-  td{padding:5pt 7pt;border-bottom:1px solid #d9cfba;vertical-align:top}
+  th{background:#14103a;color:#f4f0ff;text-align:left;padding:5pt 7pt;font-weight:600}
+  td{padding:5pt 7pt;border-bottom:1px solid #d9d2f2;vertical-align:top}
   tr{page-break-inside:avoid}
   .portada{height:240mm;display:flex;flex-direction:column;justify-content:center;page-break-after:always}
   .portada .marca{display:flex;align-items:center;gap:10pt;margin-bottom:40pt}
-  .portada .sub{font-size:14pt;color:#4d6663;max-width:125mm}
-  .portada .meta{margin-top:50pt;color:#4d6663}
-  .caja{background:#f7f2e8;border-left:4px solid #f0a030;padding:8pt 12pt;margin:8pt 0 12pt;border-radius:3pt;page-break-inside:avoid}
-  .caja b:first-child{color:#8a5200}
-  .decir{background:#e3efe6;border-left:4px solid #12403f;padding:8pt 12pt;margin:6pt 0 12pt;border-radius:3pt;page-break-inside:avoid;font-style:italic}
-  .decir:before{content:"Qué decir · ";font-style:normal;font-weight:700;color:#12403f}
-  .paso{display:grid;grid-template-columns:60pt 1fr;gap:0;margin:6pt 0;page-break-inside:avoid;border:1px solid #d9cfba;border-radius:5pt;overflow:hidden}
-  .paso>div:first-child{background:#12403f;color:#f0a030;font-weight:700;padding:8pt;text-align:center;font-size:9.5pt}
+  .portada .sub{font-size:14pt;color:#5a5580;max-width:125mm}
+  .portada .meta{margin-top:50pt;color:#5a5580}
+  .caja{background:#f4f0ff;border-left:4px solid #ffd23f;padding:8pt 12pt;margin:8pt 0 12pt;border-radius:3pt;page-break-inside:avoid}
+  .caja b:first-child{color:#4a2fd8}
+  .decir{background:#e8e2ff;border-left:4px solid #5b3df5;padding:8pt 12pt;margin:6pt 0 12pt;border-radius:3pt;page-break-inside:avoid;font-style:italic}
+  .decir:before{content:"Qué decir · ";font-style:normal;font-weight:700;color:#5b3df5}
+  .paso{display:grid;grid-template-columns:60pt 1fr;gap:0;margin:6pt 0;page-break-inside:avoid;border:1px solid #d9d2f2;border-radius:5pt;overflow:hidden}
+  .paso>div:first-child{background:#5b3df5;color:#ffd23f;font-weight:700;padding:8pt;text-align:center;font-size:9.5pt}
   .paso>div:last-child{padding:7pt 10pt}
   .paso p{margin:0 0 4pt}
   .indice li{margin-bottom:2pt}
-  em{color:#8a5200;font-style:normal;font-weight:600}
+  em{color:#4a2fd8;font-style:normal;font-weight:600}
   .check li{list-style:none;margin-left:-14pt}
   .check li:before{content:"☐  "}
 </style>
@@ -41,8 +41,8 @@
 
 <section class="portada">
   <div class="marca">
-    <svg width="64" height="43" viewBox="0 0 48 32"><circle cx="17" cy="16" r="13" fill="#0c2b2c"/><circle cx="31" cy="16" r="13" fill="#f0a030" fill-opacity=".9"/></svg>
-    <span style="font:26pt Georgia,serif;color:#0c2b2c">Tándem</span>
+    <svg width="64" height="43" viewBox="0 0 48 32"><circle cx="17" cy="16" r="13" fill="#14103a"/><circle cx="31" cy="16" r="13" fill="#ff5a3c" fill-opacity=".9"/></svg>
+    <span style="font:26pt Georgia,serif;color:#14103a">Tándem</span>
   </div>
   <h1>Manual de usuario y guía de presentación</h1>
   <p class="sub">Cómo recorrer la aplicación, qué hacer en cada pantalla y qué ir diciendo mientras se muestra.</p>
@@ -110,7 +110,7 @@
 <h2>3. Recorrido de la portada</h2>
 <p>La portada es la cara pública. No necesita iniciar sesión. Es lo primero que ve el jurado, así que conviene recorrerla despacio, bajando con el scroll del mouse.</p>
 
-<div class="paso"><div>Carga</div><div><p><b>Qué verás:</b> una pantalla verde oscuro con el logo (dos círculos que se juntan), el nombre Tándem y una barra que se llena. Dura poco más de un segundo y sube como cortina.</p><p><b>Para qué:</b> da identidad y deja que carguen las imágenes.</p></div></div>
+<div class="paso"><div>Carga</div><div><p><b>Qué verás:</b> una pantalla violeta con el logo (dos círculos que se juntan, uno lila y otro coral), el nombre Tándem y una barra amarilla que se llena. Dura poco más de un segundo y sube como cortina.</p><p><b>Importante:</b> solo aparece la primera vez en cada pestaña. Si quieren mostrarla en la sustentación, abran la página en una pestaña nueva o en una ventana de incógnito.</p></div></div>
 <div class="paso"><div>Inicio</div><div><p><b>Qué verás:</b> foto de estudiantes, el título "Aprende de quien ya lo superó." y dos botones: <em>Solicitar una monitoría</em> y <em>Ver monitores</em>. Arriba, el menú y el botón <em>Ingresar</em>.</p><p><b>Al bajar:</b> la foto se desplaza más lento que el texto (efecto de profundidad).</p></div></div>
 <div class="decir">Esta es Tándem, el sistema de monitorías. La idea es que un estudiante aprenda de quien ya superó esa materia. Todo lo que van a ver funciona con datos reales guardados en una base de datos.</div>
 
@@ -150,7 +150,7 @@
 <div class="paso"><div>Resultado</div><div><p>Tarjetas con el monitor, sus materias y sus días y horas.</p></div></div>
 
 <h3>4.4 Crear una solicitud</h3>
-<div class="paso"><div>Ir a</div><div><p>Menú → <em>Nueva solicitud</em>, o el botón ámbar en <em>Mis solicitudes</em>.</p></div></div>
+<div class="paso"><div>Ir a</div><div><p>Menú → <em>Nueva solicitud</em>, o el botón amarillo en <em>Mis solicitudes</em>.</p></div></div>
 <div class="paso"><div>Llenar</div><div><p>Materia (obligatoria), fecha preferida (no puede ser anterior a hoy), tema (mínimo 4 letras) y notas opcionales para el monitor. Ejemplo: <em>Cálculo I · Integrales por partes</em>.</p></div></div>
 <div class="paso"><div>Resultado</div><div><p>Vuelve a <em>Mis solicitudes</em> con el aviso "Solicitud enviada. Quedó en estado pendiente." La nueva fila aparece con la etiqueta <em>Pendiente</em> y "Por asignar" en la columna Monitor.</p></div></div>
 <div class="decir">Quedó guardada en la tabla solicitudes con estado pendiente. El estudiante solo ve sus propias solicitudes.</div>
@@ -158,10 +158,10 @@
 <h3>4.5 Seguir, editar, cancelar y eliminar</h3>
 <table>
   <tr><th>Estado</th><th>Etiqueta</th><th>Qué se puede hacer</th></tr>
-  <tr><td>Pendiente</td><td>Ámbar</td><td><em>Editar</em>, <em>Cancelar</em> y <em>Eliminar</em>.</td></tr>
-  <tr><td>Asignada</td><td>Verde</td><td>Solo <em>Cancelar</em>. Ya muestra el nombre del monitor.</td></tr>
-  <tr><td>Atendida</td><td>Verde oscuro</td><td>Nada. Muestra si asistió y los temas vistos.</td></tr>
-  <tr><td>Cancelada</td><td>Gris</td><td>Solo <em>Eliminar</em>.</td></tr>
+  <tr><td>Pendiente</td><td>Amarilla</td><td><em>Editar</em>, <em>Cancelar</em> y <em>Eliminar</em>.</td></tr>
+  <tr><td>Asignada</td><td>Verde menta</td><td>Solo <em>Cancelar</em>. Ya muestra el nombre del monitor.</td></tr>
+  <tr><td>Atendida</td><td>Azul noche (casi negra)</td><td>Nada. Muestra si asistió y los temas vistos.</td></tr>
+  <tr><td>Cancelada</td><td>Lila suave con borde</td><td>Solo <em>Eliminar</em>.</td></tr>
 </table>
 <p>Cancelar y eliminar abren una ventana de confirmación con el diseño de la página (no la alerta del navegador): "¿Cancelar esta solicitud?" con los botones <em>No, volver</em> y <em>Sí, continuar</em>. Eliminar borra la fila para siempre.</p>
 <div class="decir">Por seguridad y coherencia, una solicitud solo se edita mientras está pendiente: después ya hay un monitor organizando su tiempo.</div>
@@ -171,7 +171,7 @@
 <h3>5.1 Mi agenda</h3>
 <p>Arriba aparecen las materias que atiende (las define Bienestar). Después, dos tablas: <em>Mis días y horas disponibles</em> y <em>Solicitudes asignadas a mí</em>.</p>
 <h3>5.2 Publicar disponibilidad</h3>
-<div class="paso"><div>Ir a</div><div><p><em>Agregar franja</em> (botón ámbar).</p></div></div>
+<div class="paso"><div>Ir a</div><div><p><em>Agregar franja</em> (botón amarillo).</p></div></div>
 <div class="paso"><div>Llenar</div><div><p>Día (lunes a sábado), hora de inicio y hora de fin.</p></div></div>
 <div class="paso"><div>Probar el error</div><div><p>Pon la hora de fin antes que la de inicio: "La hora de fin debe ser después de la de inicio".</p></div></div>
 <div class="paso"><div>Resultado</div><div><p>La franja aparece en la tabla y ya la ven los estudiantes en la portada y en <em>Monitores</em>. Se puede <em>Editar</em> o <em>Eliminar</em> (con confirmación).</p></div></div>

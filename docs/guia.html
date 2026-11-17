@@ -6,39 +6,39 @@
 <style>
   @page{size:A4;margin:18mm 16mm 18mm 16mm}
   *{box-sizing:border-box}
-  body{font:10.5pt/1.55 "Segoe UI",Arial,sans-serif;color:#14302f;margin:0}
-  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:#0c2b2c;line-height:1.15}
+  body{font:10.5pt/1.55 "Segoe UI",Arial,sans-serif;color:#1d1846;margin:0}
+  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:#14103a;line-height:1.15}
   h1{font-size:30pt;margin:0 0 6pt;font-weight:400}
-  h2{font-size:17pt;margin:26pt 0 8pt;padding-top:8pt;border-top:2px solid #f0a030;font-weight:400;page-break-after:avoid}
+  h2{font-size:17pt;margin:26pt 0 8pt;padding-top:8pt;border-top:2px solid #ffd23f;font-weight:400;page-break-after:avoid}
   h3{font-size:12.5pt;margin:16pt 0 4pt;font-weight:700;page-break-after:avoid}
   p{margin:0 0 7pt}
   ul,ol{margin:0 0 8pt;padding-left:18pt}
   li{margin-bottom:3pt}
-  code{font:9.5pt Consolas,monospace;background:#efe8d8;padding:1pt 4pt;border-radius:3pt}
-  pre{font:8.6pt/1.4 Consolas,monospace;background:#0c2b2c;color:#f7f2e8;padding:9pt 11pt;border-radius:6pt;white-space:pre-wrap;page-break-inside:avoid;margin:6pt 0 10pt}
+  code{font:9.5pt Consolas,monospace;background:#eee9ff;padding:1pt 4pt;border-radius:3pt}
+  pre{font:8.6pt/1.4 Consolas,monospace;background:#14103a;color:#f4f0ff;padding:9pt 11pt;border-radius:6pt;white-space:pre-wrap;page-break-inside:avoid;margin:6pt 0 10pt}
   table{width:100%;border-collapse:collapse;margin:6pt 0 12pt;font-size:9.6pt;page-break-inside:auto}
-  th{background:#0c2b2c;color:#f7f2e8;text-align:left;padding:5pt 7pt;font-weight:600}
-  td{padding:5pt 7pt;border-bottom:1px solid #d9cfba;vertical-align:top}
+  th{background:#14103a;color:#f4f0ff;text-align:left;padding:5pt 7pt;font-weight:600}
+  td{padding:5pt 7pt;border-bottom:1px solid #d9d2f2;vertical-align:top}
   tr{page-break-inside:avoid}
   .portada{height:240mm;display:flex;flex-direction:column;justify-content:center;page-break-after:always}
   .portada .marca{display:flex;align-items:center;gap:10pt;margin-bottom:40pt}
-  .portada .sub{font-size:14pt;color:#4d6663;max-width:120mm}
-  .portada .meta{margin-top:50pt;color:#4d6663}
-  .caja{background:#f7f2e8;border-left:4px solid #f0a030;padding:8pt 12pt;margin:8pt 0 12pt;border-radius:3pt;page-break-inside:avoid}
-  .caja b:first-child{color:#8a5200}
+  .portada .sub{font-size:14pt;color:#5a5580;max-width:120mm}
+  .portada .meta{margin-top:50pt;color:#5a5580}
+  .caja{background:#f4f0ff;border-left:4px solid #ffd23f;padding:8pt 12pt;margin:8pt 0 12pt;border-radius:3pt;page-break-inside:avoid}
+  .caja b:first-child{color:#4a2fd8}
   .flujo{display:flex;gap:5pt;margin:8pt 0 12pt;page-break-inside:avoid}
-  .flujo div{flex:1;background:#12403f;color:#f7f2e8;padding:7pt 6pt;border-radius:5pt;font-size:8.8pt;text-align:center}
-  .flujo div b{display:block;color:#f0a030;margin-bottom:2pt}
+  .flujo div{flex:1;background:#5b3df5;color:#f4f0ff;padding:7pt 6pt;border-radius:5pt;font-size:8.8pt;text-align:center}
+  .flujo div b{display:block;color:#ffd23f;margin-bottom:2pt}
   .indice li{margin-bottom:2pt}
-  em{color:#8a5200;font-style:normal;font-weight:600}
+  em{color:#4a2fd8;font-style:normal;font-weight:600}
 </style>
 </head>
 <body>
 
 <section class="portada">
   <div class="marca">
-    <svg width="64" height="43" viewBox="0 0 48 32"><circle cx="17" cy="16" r="13" fill="#0c2b2c"/><circle cx="31" cy="16" r="13" fill="#f0a030" fill-opacity=".9"/></svg>
-    <span style="font:26pt Georgia,serif;color:#0c2b2c">Tándem</span>
+    <svg width="64" height="43" viewBox="0 0 48 32"><circle cx="17" cy="16" r="13" fill="#14103a"/><circle cx="31" cy="16" r="13" fill="#ff5a3c" fill-opacity=".9"/></svg>
+    <span style="font:26pt Georgia,serif;color:#14103a">Tándem</span>
   </div>
   <h1>Guía de funcionamiento</h1>
   <p class="sub">Sistema de Monitorías Académicas. Qué es, cómo está hecho, cómo se usa y cómo explicarlo en la sustentación.</p>
@@ -302,9 +302,11 @@ solicitudes ── sesiones                        (uno a uno)</pre>
 <h2>9. El frontend: diseño, JavaScript y fetch</h2>
 <h3>Diseño</h3>
 <ul>
-  <li><b>Paleta:</b> verde pino profundo (confianza, ambiente académico), papel cálido (lectura cómoda) y ámbar como acento para las acciones. Los colores están definidos una sola vez como variables CSS (<code>--ink</code>, <code>--paper</code>, <code>--amber</code>…).</li>
+  <li><b>Paleta "campus eléctrico":</b> violeta eléctrico como color de marca, azul noche casi negro para los fondos oscuros, amarillo sol para la acción principal, coral y menta como acentos, y papel cálido para leer cómodo. Cada color tiene un papel (por ejemplo, el amarillo es solo para acciones y el estado "pendiente"; la menta, para "asignada"). Están definidos una sola vez como variables CSS en <code>landing.css</code> (<code>--ink</code>, <code>--violet</code>, <code>--sun</code>, <code>--coral</code>, <code>--mint</code>…), así que cambiar la paleta es cambiar un bloque.</li>
   <li><b>Tipografía:</b> Fraunces (títulos, con carácter editorial) y DM Sans (texto y formularios).</li>
-  <li><b>Logo:</b> dos círculos que se superponen: estudiante y monitor trabajando "en tándem".</li>
+  <li><b>Logo:</b> dos círculos que se superponen (violeta y coral): estudiante y monitor trabajando "en tándem".</li>
+  <li><b>Pantalla de carga:</b> dura poco más de un segundo y aparece una sola vez por pestaña (<code>carga.js</code> guarda una marca en <code>sessionStorage</code>); en las demás páginas la app responde al instante. Para volver a verla, abre una pestaña nueva o una ventana de incógnito.</li>
+  <li><b>Pulido de interfaz:</b> los botones reaccionan al presionar, las ventanas y avisos "llegan" con desenfoque y escala suaves y se van por el mismo camino, la barra superior es translúcida, el botón de envío muestra un indicador mientras trabaja y se respetan las preferencias de movimiento, transparencia y contraste reducidos del sistema.</li>
   <li><b>Responsive:</b> en pantallas pequeñas las tablas se convierten en tarjetas y el menú se pliega.</li>
   <li><b>Accesibilidad:</b> enlace para saltar al contenido, foco visible, etiquetas en cada campo, contraste revisado y respeto a "reducir movimiento".</li>
 </ul>
@@ -313,6 +315,7 @@ solicitudes ── sesiones                        (uno a uno)</pre>
 <h3>JavaScript propio</h3>
 <table>
   <tr><th>Archivo</th><th>Qué hace</th></tr>
+  <tr><td><code>carga.js</code></td><td>Controla la pantalla de carga: una vez por sesión, ~1 s.</td></tr>
   <tr><td><code>validacion.js</code></td><td>Revisa cada campo al salir de él y al enviar: obligatorio, correo, patrón (código), longitud mínima, cantidad de palabras, fecha mínima (hoy) y hora de fin posterior a la de inicio. Muestra el error bajo el campo y pide confirmación antes de eliminar o cancelar. También convierte los mensajes de Flask en avisos emergentes.</td></tr>
   <tr><td><code>landing.js</code></td><td>Animaciones de la portada y el filtro de monitores.</td></tr>
   <tr><td><code>reportes.js</code></td><td>Actualiza la tabla de reportes mientras se escribe.</td></tr>

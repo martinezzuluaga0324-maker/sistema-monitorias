@@ -67,7 +67,12 @@
         mostrar(el, msg);
         if (msg && !primero) primero = el;
       });
-      if (primero) { e.preventDefault(); primero.focus(); toast('Revisa los campos marcados.', 'error'); }
+      if (primero) { e.preventDefault(); primero.focus(); toast('Revisa los campos marcados.', 'error'); return; }
+      // Todo está bien: se evita el doble envío y el botón muestra que está trabajando.
+      if (form.dataset.enviando) { e.preventDefault(); return; }
+      form.dataset.enviando = '1';
+      const boton = e.submitter || form.querySelector('button:not([type=button])');
+      if (boton) boton.classList.add('is-loading');
     });
   });
 
@@ -94,8 +99,29 @@
     dialogo.showModal();
     dialogo.querySelector('[data-no]').focus();
   });
+  // Se cierra por el mismo camino por el que llegó (animación de salida) antes de cerrar de verdad.
+  const reducir = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cerrar = despues => {
+    dialogo.classList.add('is-closing');
+    setTimeout(() => { dialogo.close(); dialogo.classList.remove('is-closing'); if (despues) despues(); }, reducir ? 0 : 200);
+  };
   dialogo.addEventListener('click', e => {
-    if (e.target.matches('[data-si]') && formPendiente) { const f = formPendiente; formPendiente = null; dialogo.close(); f.submit(); }
-    else if (e.target.matches('[data-no]') || e.target === dialogo) { formPendiente = null; dialogo.close(); }
+    if (dialogo.classList.contains('is-closing')) return;
+    if (e.target.matches('[data-si]') && formPendiente) { const f = formPendiente; formPendiente = null; cerrar(() => f.submit()); }
+    else if (e.target.matches('[data-no]') || e.target === dialogo) { formPendiente = null; cerrar(); }
+  });
+  dialogo.addEventListener('cancel', e => { e.preventDefault(); formPendiente = null; cerrar(); });   // tecla Esc
+
+  /* ---------- Barra superior: la línea aparece solo cuando el contenido pasa por debajo ---------- */
+  const barra = document.querySelector('.appbar');
+  if (barra) {
+    const borde = () => barra.classList.toggle('is-scrolled', scrollY > 4);
+    borde(); addEventListener('scroll', borde, { passive: true });
+  }
+
+  /* ---------- Al volver con "Atrás" los botones no se quedan cargando ---------- */
+  addEventListener('pageshow', () => {
+    $$('.btn.is-loading').forEach(b => b.classList.remove('is-loading'));
+    $$('form[data-enviando]').forEach(f => delete f.dataset.enviando);
   });
 })();

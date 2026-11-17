@@ -4,16 +4,6 @@
 
 {% block cuerpo %}
 {% set panel = {'estudiante': 'estudiante.panel', 'monitor': 'monitor.panel', 'docente': 'docente.panel', 'bienestar': 'bienestar.panel'} %}
-<!-- Pantalla de carga -->
-<div class="loader" id="loader" aria-hidden="true">
-  <div class="loader__inner">
-    <svg class="loader__mark" viewBox="0 0 48 32"><use href="#logo-mark"/></svg>
-    <span class="loader__word">Tándem</span>
-  </div>
-  <div class="loader__bar"><i></i></div>
-</div>
-
-
 <a class="skip" href="#contenido">Saltar al contenido</a>
 
 <header class="nav" id="nav">
@@ -86,13 +76,13 @@
       <p>Cada persona ve solo lo que necesita para hacer su parte. Desliza para conocerlos.</p>
     </div>
     <div class="roles__track" id="rolesTrack">
-      <article class="role" style="--tone:var(--amber)">
+      <article class="role" style="--tone:var(--sun)">
         <div class="role__img"><img loading="lazy" src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=75" alt="Estudiantes conversando en el campus"></div>
         <h3>Estudiante</h3>
         <p>Se registra, pide monitoría de una materia, consulta la disponibilidad y sigue el estado de cada solicitud.</p>
         <ul><li>Registro e inicio de sesión</li><li>Solicitud por materia y tema</li><li>Cancelar si cambian los planes</li></ul>
       </article>
-      <article class="role" style="--tone:var(--sage)">
+      <article class="role" style="--tone:var(--mint)">
         <div class="role__img"><img loading="lazy" src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1000&q=75" alt="Monitor explicando un tema a compañeros"></div>
         <h3>Monitor</h3>
         <p>Publica sus días y horas libres y deja constancia de cada sesión: quién asistió y qué se trabajó.</p>
@@ -104,7 +94,7 @@
         <p>Remite a quien necesita refuerzo y consulta el historial de monitorías de sus propios estudiantes.</p>
         <ul><li>Remitir a monitoría</li><li>Historial de su grupo</li><li>Solo ve a sus inscritos</li></ul>
       </article>
-      <article class="role" style="--tone:#9fc1d4">
+      <article class="role" style="--tone:#7cc8ff">
         <div class="role__img"><img loading="lazy" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1000&q=75" alt="Aula universitaria"></div>
         <h3>Bienestar Institucional</h3>
         <p>Asigna monitores a las solicitudes pendientes y genera reportes por materia, monitor y periodo.</p>
@@ -142,7 +132,7 @@
       </div>
       <div class="card__img"><img loading="lazy" src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=75" alt="Estudiante escribiendo en su cuaderno"></div>
     </article>
-    <article class="card" style="--i:1;--bg:var(--amber);--fg:var(--ink)">
+    <article class="card" style="--i:1;--bg:var(--sun);--fg:var(--ink)">
       <div class="card__text">
         <span class="card__n">2</span>
         <h3>Bienestar asigna</h3>
@@ -150,7 +140,7 @@
       </div>
       <div class="card__img"><img loading="lazy" src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=75" alt="Equipo de trabajo revisando solicitudes"></div>
     </article>
-    <article class="card" style="--i:2;--bg:var(--pine);--fg:var(--paper)">
+    <article class="card" style="--i:2;--bg:var(--violet);--fg:var(--paper)">
       <div class="card__text">
         <span class="card__n">3</span>
         <h3>Asistes y queda registro</h3>

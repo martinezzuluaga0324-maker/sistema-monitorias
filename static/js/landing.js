@@ -78,11 +78,8 @@
   const scrollToEl = sel => { const el = $(sel); if (!el) return; lenis ? lenis.scrollTo(el, { offset: -60, duration: 1.6 }) : el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); };
   $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => { const h = a.getAttribute('href'); if (h.length > 1 && $(h)) { e.preventDefault(); scrollToEl(h); } }));
 
-  /* ---------- Loader (corto: ~1.3 s) ---------- */
-  const loader = $('#loader');
-  const finishLoad = () => { document.body.classList.remove('is-loading'); loader.remove(); };
-
-  if (!hasGsap) { finishLoad(); $$('.w').forEach(w => w.style.opacity = 1); return; }
+  /* ---------- Arranque: espera a que la pantalla de carga (carga.js) empiece a subir ---------- */
+  if (!hasGsap) { $$('.w').forEach(w => w.style.opacity = 1); return; }
   gsap.registerPlugin(ScrollTrigger);
   gsap.defaults({ ease: 'expo.out' });
 
@@ -104,18 +101,8 @@
     gsap.to('.nav', { yPercent: 0, duration: 1, delay: .4 });
   };
 
-  const tl = gsap.timeline({ onComplete: () => { finishLoad(); intro(); setup(); } });
-  // Red de seguridad: si la animación no termina (pestaña en segundo plano), la carga nunca se queda pegada.
-  setTimeout(() => { if (document.getElementById('loader')) tl.progress(1); }, 3500);
-  if (reduce) { tl.set({}, {}, .2); }
-  else {
-    tl.from('.loader__mark circle:first-child', { x: 12, duration: .9, ease: 'power3.out' }, 0)
-      .from('.loader__mark circle:last-child', { x: -12, duration: .9, ease: 'power3.out' }, 0)
-      .from('.loader__word', { yPercent: 110, duration: .8 }, .1)
-      .to('.loader__bar i', { scaleX: 1, duration: .95, ease: 'power2.inOut' }, 0)
-      .to('.loader__inner,.loader__bar', { opacity: 0, y: -16, duration: .35, ease: 'power2.in' }, 1.05)
-      .to('.loader', { yPercent: -100, duration: .75, ease: 'expo.inOut' }, 1.2);
-  }
+  const arrancar = () => { intro(); setup(); };
+  window.__tandemListo ? arrancar() : document.addEventListener('tandem:listo', arrancar, { once: true });
 
   /* ---------- Animaciones de scroll ---------- */
   function setup() {

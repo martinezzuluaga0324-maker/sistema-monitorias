@@ -38,6 +38,7 @@
 
   const cargar = async (pagina = 1) => {
     const params = parametros(pagina);
+    tabla.setAttribute('aria-busy', 'true');       // la tabla se atenúa mientras llegan los datos
     try {
       const r = await fetch(tabla.dataset.api + '?' + params);
       if (!r.ok) throw new Error();
@@ -54,6 +55,7 @@
     } catch {
       conteo.textContent = 'No se pudo actualizar. Pulsa «Filtrar».';
     }
+    tabla.removeAttribute('aria-busy');
   };
 
   form.addEventListener('submit', e => { e.preventDefault(); cargar(1); });

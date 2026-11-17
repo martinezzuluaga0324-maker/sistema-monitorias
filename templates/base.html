@@ -5,22 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block titulo %}Tándem{% endblock %} · Sistema de Monitorías Académicas</title>
 <meta name="description" content="Plataforma para solicitar, asignar y hacer seguimiento a monitorías académicas.">
-<meta name="theme-color" content="#0c2b2c">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='15' cy='20' r='11' fill='%230c2b2c'/%3E%3Ccircle cx='25' cy='20' r='11' fill='%23f0a030' fill-opacity='.9'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#14103a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='15' cy='20' r='11' fill='%2314103a'/%3E%3Ccircle cx='25' cy='20' r='11' fill='%23ff5a3c' fill-opacity='.9'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+{# Si ya se mostró la pantalla de carga en esta sesión, se oculta desde el primer instante (sin parpadeo). #}
+<script>try{if(sessionStorage.getItem('tandem.cargado'))document.documentElement.classList.add('sin-carga')}catch(e){}</script>
+<noscript><style>.loader{display:none!important}body.is-loading{overflow:auto!important}</style></noscript>
 {% block head %}{% endblock %}
 </head>
-<body class="{% block body_class %}{% endblock %}">
+<body class="{% block body_class %}is-loading{% endblock %}">
+
+{# Pantalla de carga: se muestra una vez por sesión (~1 s). La controla static/js/carga.js #}
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__inner">
+    <svg class="loader__mark" viewBox="0 0 48 32">
+      <g class="loader__g1"><circle cx="17" cy="16" r="13" fill="#cfc6ff"/></g>
+      <g class="loader__g2"><circle cx="31" cy="16" r="13" fill="#ff5a3c" style="mix-blend-mode:multiply"/></g>
+    </svg>
+    <span class="loader__word">Tándem</span>
+  </div>
+  <div class="loader__bar"><i></i></div>
+</div>
 
 {# Símbolos SVG reutilizables (logo e íconos) #}
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="logo-mark" viewBox="0 0 48 32">
     <circle cx="17" cy="16" r="13" fill="currentColor"/>
-    <circle cx="31" cy="16" r="13" fill="#f0a030" style="mix-blend-mode:multiply"/>
+    <circle cx="31" cy="16" r="13" fill="#ff5a3c" style="mix-blend-mode:multiply"/>
   </symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </svg>
@@ -31,6 +46,7 @@
 <div class="toast" id="toast" role="status" aria-live="polite"
      data-mensajes='{{ get_flashed_messages(with_categories=true) | tojson | forceescape }}'></div>
 
+<script src="{{ url_for('static', filename='js/carga.js') }}"></script>
 <script src="{{ url_for('static', filename='js/validacion.js') }}"></script>
 {% block scripts %}{% endblock %}
 </body>
